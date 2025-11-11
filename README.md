@@ -1,0 +1,1 @@
+Projeto de um site institucional voltada a música e ao desenvolvimento da percepção musical, oferecendo exercícios interativos para identificação de notas e acordes em diferentes instrumentos (baixo, violão e teclado). Inclui dashboard com métricas de desempenho e evolução do usuário.
