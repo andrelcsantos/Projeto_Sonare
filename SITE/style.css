@@ -1,0 +1,136 @@
+:root {
+    --main-color: #1A2E39;
+    --branco-color: #f1f1f1;
+    --second-color: #58A9CE;
+    --border: 0.1rem solid rgba(88,169,206,0.3);
+    font-size: 10px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    outline: none;
+    border: none;
+    text-decoration: none;
+    text-transform: capitalize;
+    font-family: "Roboto", sans-serif;
+}
+
+body {
+    background-color: var(--main-color);
+}
+
+#logo-navbar {
+    width: 75px;
+}
+
+section {
+    padding: 3rem 2rem;
+    margin: 0 auto;
+    max-width: 1200px;
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 99;
+    border-bottom: var(--border);
+    background-color: var(--main-color);
+}
+
+.header section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+}
+
+.navbar a {
+    margin: 0 1rem;
+    font-size: 1.8rem;
+    color: var(--branco-color);
+}
+
+.btn-login, .btn-cadastro {
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    margin-left: 10px;
+    color: var(--main-color);
+    font-size: 1.5rem;
+}
+
+.navbar a:hover {
+    border-bottom: 0.1rem solid rgba(241,241,241,0.3);
+    padding-bottom: 0.2rem;
+}
+
+.btn-login, .btn-cadastro {
+    background-color: var(--branco-color);
+
+}
+
+.btn {
+    background-color: var(--main-color);
+    color: var(--branco-color);
+    padding: 1rem 3rem;
+    font-size: 1.7rem;
+    cursor: pointer;
+    margin-top: 1rem;
+    display: inline-block;
+}
+
+.home-container {
+    background: url(./IMG/background.jpg);
+    height: 100vh;
+    background-position: center;
+    background-size: cover;
+}
+
+.home-container section {
+    display: flex;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.content {
+    max-width: 100rem;
+}
+
+.content h3 {
+    color: #f1f1f1;
+    font-size: 6rem;
+}
+
+.content p {
+    color: #f1f1f1;
+    font-size: 2rem;
+    font-weight: 100;
+    line-height: 1.8;
+    padding: 1rem 0;
+
+}
+
+.title {
+    font-size: 5rem;
+    color: var(--branco-color);
+    text-transform: uppercase;
+}
+
+.title span {
+    font-size: 5rem;
+    color: var(--second-color);
+    text-align: center;
+    text-transform: uppercase;
+    
+} 
+.about .row {
+    display: flex;
+    align-items: center;
+    background-color: var(--second-color);
+    gap: 1.5rem;
+
+}
