@@ -1,0 +1,135 @@
+@import "https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css";
+
+ * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Roboto", sans-serif;
+} 
+
+:root {
+    --main-color: #1A2E39;
+    --branco-color: #f1f1f1;
+    --second-color: #58A9CE;
+    --border: 0.2rem solid #58A9CE;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: var(--main-color);
+    background-image: url(../img/background_color.jpg);
+    background-size: cover;
+    background-position: center;
+}
+
+#icon-logo {
+    width: 60px;
+    padding: 0px 15px;
+}
+.container {
+    width: 420px;
+    background-color: transparent;
+    border: 2px solid var(--branco-color);
+    border: 10px;
+    color: var(--branco-color);
+    padding: 30px 40px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+    backdrop-filter: blur(10px);
+}
+
+.container h1 {
+    font-size: 36px;
+    text-align: center;
+}
+
+.input-box {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    margin: 30px 0;
+}
+
+.input-box input {
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    border: 2px solid var(--second-color);
+    border-radius: 40px;
+    outline: none;
+    font-size: 16px;
+    color: var(--branco-color);
+    padding: 20px 45px 20px 20px;
+}
+
+.input-box input::placeholder {
+    color: var(--border);
+}
+
+.input-box i {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+}
+
+.remember-forgot {
+    display: flex;
+    justify-content: space-between;
+    margin: -15px 0 15px;
+}
+
+.remember-forgot label input {
+    accent-color: #fff;
+    margin-right: 5px;
+}
+
+.remember-forgot a {
+    text-decoration: none;
+    color: var(--branco-color);
+}
+
+.remember-forgot a:hover {
+    text-decoration: underline;
+}
+
+.login {
+    width: 100%;
+    height: 50px;
+    background-color: var(--branco-color);
+    border: none;
+    border-radius: 40px;
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--main-color);
+    font-weight: 600;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+    margin-top: 20px;
+}
+
+.login:hover {
+    background-color: transparent;
+    border: 2px solid var(--second-color);
+    color: var(--branco-color);
+    transition: 0.4s;
+}
+
+.registro-link {
+    font-size: 14px;
+    text-align: center;
+    margin: 20px 0 15px;
+}
+
+.registro-link a {
+    text-decoration: none;
+    color: var(--branco-color);
+    font-weight: 500;
+}
+
+.registro-link a:hover {
+    text-decoration: underline;
+    color: var(--second-color);
+}

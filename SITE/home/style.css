@@ -21,7 +21,7 @@ body {
 }
 
 #logo-navbar {
-    width: 75px;
+    width: 55px;
 }
 
 section {
@@ -54,23 +54,20 @@ section {
     color: var(--branco-color);
 }
 
-.btn-login, .btn-cadastro {
+.btn-login {
     text-decoration: none;
-    padding: 8px 12px;
+    padding: 8px 50px;
     border-radius: 4px;
     margin-left: 10px;
     color: var(--main-color);
     font-size: 1.5rem;
+    font-weight: 700;
+    background-color: var(--branco-color);
 }
 
 .navbar a:hover {
     border-bottom: 0.1rem solid rgba(241,241,241,0.3);
     padding-bottom: 0.2rem;
-}
-
-.btn-login, .btn-cadastro {
-    background-color: var(--branco-color);
-
 }
 
 .btn {
