@@ -8,25 +8,51 @@
 </head>
 <body>
     <main class="container">
-        <form>
             <h1><img src="../img/logo.png" id="icon-logo">Cadastro</h1>
             <div class="input-box">
-                <input placeholder="E-mail" type="email">
+                <input placeholder="E-mail" type="email" id="input_email">
             </div>
 
             <div class="input-box">
-                <input placeholder="Nome" type="name">
+                <input placeholder="Nome" type="name" id="input_nome">
             </div>
             <div class="input-box">
-                <input placeholder="Senha" type="password">
+                <input placeholder="Senha" type="password" id="input_senha">
             </div>
             <div class="input-box">
-                <input placeholder="Confirme" type="password">
+                <input placeholder="Confirme" type="password" id="input_confirmarSenha">
             </div>
                 <!-- <a href="#">Esqueci minha senha</a> -->
             </div>
-            <button type="submit" class="cadastro">Cadastrar</button>
-        </form>
+            <button type="btn" class="cadastro" onclick="cadastro()">Cadastrar</button>
     </main>
 </body>
 </html>
+
+<script>
+
+    function cadastro () {
+        var email = input_email.value;
+        var nome = input_nome.value;
+        var senha = input_senha.value;
+        var confirmarSenha = input_confirmarSenha.value;
+
+        if(email == '' || nome == '' || senha == '' || confirmarSenha != senha) {
+            alert('Por favor, preencha todos os campos corretamente');
+        } else {
+            var caracEspecial = ['@', '#', '$', "%", "&", "*", ")", "(", ".", "?"];
+            var numerico = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
+            var senhaValida = 0;
+
+            for(var i = 0; i <= caracEspecial; i++) {
+                if(senha.includes(caracEspecial[i]) || senha.includes(numerico[i])) {
+                    senhaValida ++;
+                }
+
+                if(senhaValida < 1) {
+                    alert('Insira pelo menos um caracter especial ou um número na senha')
+                }
+            }
+        }
+    }
+</script>

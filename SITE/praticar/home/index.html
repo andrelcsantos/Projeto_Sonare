@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Praticar</title>
+</head>
+<body>
+    <button onclick="telaBaixo()">Baixo</button>
+    <button onclick="telaTeclado()">Teclado</button>
+    <button onclick="telaViolao()">Violão</button>
+
+</body>
+</html>
+<script>
+    function telaBaixo() {
+        document.body.innerHTML = `
+        <div>
+            <a href="../home/index.html">
+            <button><<<</button>
+            </a>
+        </div>
+        <br>
+        
+        <div id="option_nota">
+            <a href="../nota/bass.html">
+            <button class="btn_exercicio">Nota</button>
+            </a>
+        </div>
+
+        <div id="option_acorde">
+            <a href="../acorde/bass.html">
+            <button class="btn_exercicio">Acorde</button>
+            </a>
+        </div>
+        `
+    }
+
+    function telaTeclado() {
+        document.body.innerHTML = `
+       <div id="option_nota">
+        <a href="../nota/teclado.html">
+            <button class="btn_exercicio">Nota</button>
+        </a>
+        </div>
+
+        <div id="option_acorde">
+        <a href="../acorde/teclado.html">
+        <button class="btn_exercicio">Acorde</button>
+        </a>
+        </div>
+        `
+    }
+
+    function telaViolao() {
+        document.body.innerHTML = `
+       <div id="option_nota">
+        <a href="../nota/violao.html">
+            <button class="btn_exercicio">Nota</button>
+        </a>
+        </div>
+
+        <div id="option_acorde">
+        <a href="../acorde/violao.html">
+        <button class="btn_exercicio">Acorde</button>
+        </a>
+        </div>
+        `
+    }
+
+</script>

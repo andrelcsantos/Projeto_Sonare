@@ -8,14 +8,13 @@
 </head>
 <body>
     <main class="container">
-        <form>
             <h1><img src="../img/logo.png" id="icon-logo">Login Sonare</h1>
             <div class="input-box">
-                <input placeholder="E-mail" type="email">
+                <input placeholder="E-mail" type="email" id="input_email">
                 <i class="bx bxs-user"></i>
             </div>
             <div class="input-box">
-                <input placeholder="Senha" type="password">
+                <input placeholder="Senha" type="password" id="input_senha">
                 <i class="bx bxs-lock-alt"></i>
             </div>
 
@@ -26,12 +25,26 @@
                 </label>
                 <!-- <a href="#">Esqueci minha senha</a> -->
             </div>
-            <button type="submit" class="login">Login</button>
+            <button type="submit" class="login" onclick="login()">Login</button>
 
             <div class="registro-link">
-                <p>Não tem uma conta? <a href="#">Cadastre-se</a></p>
+                <p>Não tem uma conta? <a href="../cadastro/index.html">Cadastre-se</a></p>
             </div>
-        </form>
     </main>
 </body>
 </html>
+<script>
+
+    function login() {
+        var email = input_email.value;
+        var senha = input_senha.value;
+
+        if(!email.includes('@') || !email.includes('.com') || email == '' || senha == '') {
+            if (!email.includes('@') || !email.includes('.com')) {
+                alert('Por favor, coloque um e-mail válido.')
+            } else {
+                alert('Por favor, preencha todos os campos')
+            }
+        }
+    }
+</script>
