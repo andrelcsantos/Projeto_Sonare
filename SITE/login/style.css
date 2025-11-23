@@ -29,15 +29,16 @@ body {
     width: 60px;
     padding: 0px 15px;
 }
+
 .container {
     width: 420px;
     background-color: transparent;
-    border: 2px solid var(--branco-color);
-    border: 10px;
     color: var(--branco-color);
     padding: 30px 40px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, .2);
     backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.643);
+    border-radius: 10px;
 }
 
 .container h1 {

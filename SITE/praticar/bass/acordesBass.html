@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baixo(Acordes)</title>
+    <link rel="stylesheet" href="../style.css">
+
+</head>
+<body>
+    <button onclick="play()">Play</button> <br><br>
+    <button onclick="btn_Maior()">Maior</button>
+    <button onclick="btn_Menor()">Menor</button>
+
+    <button onclick="btn_next()">></button>
+
+    <audio id="C_Maior">
+        <source src="../files/bass/acordes/C_Maior.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="D_Maior">
+        <source src="../files/bass/acordes/D_Maior.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="E_Maior">
+        <source src="../files/bass/acordes/E_Maior.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="F_Maior">
+        <source src="../files/bass/acordes/F_Maior.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="G_Maior">
+        <source src="../files/bass/acordes/G_Maior.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="A_Maior">
+        <source src="../files/bass/acordes/A_Maior.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="B_Maior">
+        <source src="../files/bass/acordes/B_Maior.mp3" type="audio/mpeg">
+    </audio>
+    
+    
+    <audio id="C_Menor">
+        <source src="../files/bass/acordes/C_Menor.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="D_Menor">
+        <source src="../files/bass/acordes/D_Menor.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="E_Menor">
+        <source src="../files/bass/acordes/E_Menor.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="F_Menor">
+        <source src="../files/bass/acordes/F_Menor.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="G_Menor">
+        <source src="../files/bass/acordes/G_Menor.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="A_Menor">
+        <source src="../files/bass/acordes/A_Menor.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="B_Menor">
+        <source src="../files/bass/acordes/B_Menor.mp3" type="audio/mpeg">
+    </audio>
+    
+
+
+    <div id="div_mensagem"></div>
+    
+
+</body>
+</html>
+<script>
+    var acordes = [
+        [
+        document.getElementById("C_Maior"),
+        document.getElementById("D_Maior"),
+        document.getElementById("E_Maior"),
+        document.getElementById("F_Maior"),
+        document.getElementById("G_Maior"),
+        document.getElementById("A_Maior"),
+        document.getElementById("B_Maior")
+        ],
+
+        [        
+        document.getElementById("C_Menor"),
+        document.getElementById("D_Menor"),
+        document.getElementById("E_Menor"),
+        document.getElementById("F_Menor"),
+        document.getElementById("G_Menor"),
+        document.getElementById("A_Menor"),
+        document.getElementById("B_Menor")
+    ]
+    ];
+
+    var acorde = Math.floor(Math.random() * 7);
+    var tipo = Math.floor(Math.random() * 2);
+
+
+    function play() {
+  
+        acordes[tipo][acorde].play();
+}
+
+    function btn_Maior() {
+
+        if (0 == tipo) {
+            div_mensagem.innerHTML = 'Resposta certa'
+         } else {
+            div_mensagem.innerHTML = 'Resposta errada'
+         }
+    }
+
+    function btn_Menor() {
+
+         if (1 == tipo) {
+            div_mensagem.innerHTML = 'Resposta certa'
+         } else {
+            div_mensagem.innerHTML = 'Resposta errada'
+         }
+    }
+
+    function btn_next() {
+        acorde = Math.floor(Math.random() * 7);
+        tipo = Math.floor(Math.random() * 2);
+        div_mensagem.innerHTML = "";
+    }
+
+
+</script>

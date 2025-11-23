@@ -23,7 +23,6 @@
                     <input type="checkbox">
                     Lembrar-se
                 </label>
-                <!-- <a href="#">Esqueci minha senha</a> -->
             </div>
             <button type="submit" class="login" onclick="login()">Login</button>
 
@@ -44,6 +43,12 @@
                 alert('Por favor, coloque um e-mail válido.')
             } else {
                 alert('Por favor, preencha todos os campos')
+            }
+        } else {
+            if(email == 'andre@luis.com' && senha == '1234') {
+                window.location.href = '../home/index.html'
+            } else {
+                alert('E-mail ou senha incorreto')
             }
         }
     }
