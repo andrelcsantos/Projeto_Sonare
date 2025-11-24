@@ -29,6 +29,7 @@
             <div class="registro-link">
                 <p>Não tem uma conta? <a href="../cadastro/index.html">Cadastre-se</a></p>
             </div>
+
     </main>
 </body>
 </html>
@@ -45,11 +46,48 @@
                 alert('Por favor, preencha todos os campos')
             }
         } else {
-            if(email == 'andre@luis.com' && senha == '1234') {
-                window.location.href = '../home/index.html'
+            fetch("/usuarios/autenticar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                emailServer: email,
+                senhaServer: senha
+            })
+        }).then(function (resposta) {
+            console.log("ESTOU NO THEN DO entrar()!")
+
+            if (resposta.ok) {
+              alert('Login')
+                console.log(resposta);
+
+                resposta.json().then(json => {
+                    console.log(json);
+                    console.log(JSON.stringify(json));
+                    sessionStorage.EMAIL_USUARIO = json.email;
+                    sessionStorage.NOME_USUARIO = json.nome;
+                    sessionStorage.ID_USUARIO = json.id
+                    setTimeout(function () {
+                        window.location = "../praticar/home/index.html";
+                    }, 1000); 
+
+                });
+
             } else {
-                alert('E-mail ou senha incorreto')
+
+                console.log("Houve um erro ao tentar realizar o login!");
+
+                resposta.text().then(texto => {
+                    console.error(texto);
+                });
             }
-        }
+
+        }).catch(function (erro) {
+            console.log(erro);
+        })
+
+       
+      }
     }
 </script>
