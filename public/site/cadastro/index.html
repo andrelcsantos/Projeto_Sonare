@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <title>Sonare Cadastro</title>
+
+    <script src="../../js/sessao.js"></script>
 </head>
 <body>
     <main class="container">
@@ -22,67 +24,67 @@
             <div class="input-box">
                 <input placeholder="Confirme" type="password" id="input_confirmarSenha">
             </div>
-            <button type="btn" class="cadastro" onclick="cadastro()">Cadastrar</button>
+            <button type="btn" class="cadastro" onclick="cadastrar()">Cadastrar</button>
     </main>
 </body>
 </html>
 
 <script>
-
-    function cadastro () {
+    function cadastrar() {
         var email = input_email.value;
         var nome = input_nome.value;
         var senha = input_senha.value;
         var confirmarSenha = input_confirmarSenha.value;
+        var validado = false;
+        var senhaValida = 0;
 
         if(email == '' || nome == '' || senha == '' || confirmarSenha != senha) {
             alert('Por favor, preencha todos os campos corretamente');
         } else {
             var caracEspecial = ['@', '#', '$', "%", "&", "*", ")", "(", ".", "?"];
             var numerico = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
-            var senhaValida = 0;
 
-            for(var i = 0; i <= caracEspecial; i++) {
-                if(senha.includes(caracEspecial[i]) || senha.includes(numerico[i])) {
-                    senhaValida ++;
-                }
-
-                if(senhaValida < 1) {
+            for(var i = 0; i < senha.length; i++){
+              if(senha.includes(caracEspecial[i]) || senha.includes(numerico[i])) {
+                senhaValida++;
+              }
+            }
+                if(senhaValida == 0) {
                     alert('Insira pelo menos um caracter especial ou um número na senha')
+                } else {
+                  validado = true;
                 }
             }
+        if(validado) {
+          fetch("/usuarios/cadastrar", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            nomeServer: nome,
+            emailServer: email,
+            senhaServer: senha
+          }),
+        })
+          .then(function (resposta) {
+            console.log("resposta: ", resposta);
+
+            if (resposta.ok) {
+              setTimeout(() => {
+                window.location.href = '../login/index.html';
+              }/*, 2000*/);
+
+            } else {
+              alert ("Houve um erro ao tentar realizar o cadastro!");
+            }
+          })
+          .catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+          });
+
+        return false;
         }
 
-    fetch("/usuarios/cadastrar", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify({
-    nomeServer: nome,
-    emailServer: email,
-    senhaServer: senha
-  }),
-})
-  .then(function (resposta) {
-    console.log("resposta: ", resposta);
-
-    if (resposta.ok) {
-      alert ("Cadastro realizado com sucesso! Redirecionando...");
-      toast.style.remove = '20px';
-
-      setTimeout(() => {
-        window.location.href = '../login/index.html';
-      }, 2000);
-
-    } else {
-      alert ("Houve um erro ao tentar realizar o cadastro!");
-    }
-  })
-  .catch(function (resposta) {
-    console.log(`#ERRO: ${resposta}`);
-  });
-
-return false;
-      }
+      } 
 </script>

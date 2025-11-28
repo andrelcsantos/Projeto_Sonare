@@ -1,62 +1,63 @@
--- Arquivo de apoio, caso você queira criar tabelas como as aqui criadas para a API funcionar.
--- Você precisa executar os comandos no banco de dados para criar as tabelas,
--- ter este arquivo aqui não significa que a tabela em seu BD estará como abaixo!
-
-/*
-comandos para mysql server
-*/
-
-CREATE DATABASE aquatech;
-
-USE aquatech;
-
-CREATE TABLE empresa (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	razao_social VARCHAR(50),
-	cnpj CHAR(14),
-	codigo_ativacao VARCHAR(50)
-);
+CREATE DATABASE sonare;
+USE sonare;
 
 CREATE TABLE usuario (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	nome VARCHAR(50),
-	email VARCHAR(50),
-	senha VARCHAR(50),
-	fk_empresa INT,
-	FOREIGN KEY (fk_empresa) REFERENCES empresa(id)
-);
+id_usuario INT PRIMARY KEY AUTO_INCREMENT,
+nome VARCHAR (45),
+email VARCHAR (55),
+senha VARCHAR (55));
 
-CREATE TABLE aviso (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	titulo VARCHAR(100),
-	descricao VARCHAR(150),
-	fk_usuario INT,
-	FOREIGN KEY (fk_usuario) REFERENCES usuario(id)
-);
+CREATE TABLE instrumento (
+id_instrumento INT PRIMARY KEY,
+nome VARCHAR(10));
 
-create table aquario (
-/* em nossa regra de negócio, um aquario tem apenas um sensor */
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	descricao VARCHAR(300),
-	fk_empresa INT,
-	FOREIGN KEY (fk_empresa) REFERENCES empresa(id)
-);
+CREATE TABLE exercicio (
+id_exercicio INT AUTO_INCREMENT,
+fk_usuario INT,
+fk_instrumento INT,
+dia DATE,
+tipo_exercicio VARCHAR(6),
+FOREIGN KEY (fk_usuario) REFERENCES usuario(id_usuario),
+FOREIGN KEY (fk_instrumento) REFERENCES instrumento(id_instrumento),
+PRIMARY KEY (id_exercicio, fk_usuario, fk_instrumento));
 
-/* esta tabela deve estar de acordo com o que está em INSERT de sua API do arduino - dat-acqu-ino */
+CREATE TABLE resposta_exercicio (
+id_resposta INT AUTO_INCREMENT,
+resposta_correta BOOLEAN,
+fk_exercicio INT,
+FOREIGN KEY (fk_exercicio) REFERENCES exercicio(id_exercicio),
+PRIMARY KEY(id_resposta, fk_exercicio));
 
-create table medida (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	dht11_umidade DECIMAL,
-	dht11_temperatura DECIMAL,
-	luminosidade DECIMAL,
-	lm35_temperatura DECIMAL,
-	chave TINYINT,
-	momento DATETIME,
-	fk_aquario INT,
-	FOREIGN KEY (fk_aquario) REFERENCES aquario(id)
-);
+DROP TABLE instrumento;
+DROP TABLE exercicio;
+DROP TABLE resposta_exercicio;
 
-insert into empresa (razao_social, codigo_ativacao) values ('Empresa 1', 'ED145B');
-insert into empresa (razao_social, codigo_ativacao) values ('Empresa 2', 'A1B2C3');
-insert into aquario (descricao, fk_empresa) values ('Aquário de Estrela-do-mar', 1);
-insert into aquario (descricao, fk_empresa) values ('Aquário de Peixe-dourado', 2);
+INSERT INTO instrumento(id_instrumento, nome) VALUES 
+(1, 'Baixo'),
+(2, 'Violão'),
+(3, 'Teclado');
+
+INSERT INTO usuario (nome, email, senha) VALUES 
+('Luis', 'luis@gmail.com', '123456');
+
+INSERT INTO exercicio (fk_usuario, fk_instrumento, dia, tipo_exercicio) VALUES
+(1, 1, '2025-01-15', 'acorde');
+
+INSERT INTO resposta_exercicio (resposta_correta, fk_exercicio) VALUES
+(0, 1),
+(0, 1),
+(1, 1),
+(1, 1),
+(0, 1);
+
+SELECT i.nome, tipo_exercicio, resposta_correta 
+FROM exercicio
+	JOIN instrumento i
+		ON fk_instrumento = id_instrumento
+	JOIN resposta_exercicio 
+		ON fk_exercicio = id_exercicio;
+        
+
+
+
+
