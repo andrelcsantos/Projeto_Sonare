@@ -65,11 +65,11 @@
                 console.log(resposta);
 
                 resposta.json().then(json => {
-                    console.log(json);
+                    console.jsonlog(json);
                     console.log(JSON.stringify(json));
                     sessionStorage.EMAIL_USUARIO = json.email;
                     sessionStorage.NOME_USUARIO = json.nome;
-                    sessionStorage.ID_USUARIO = json.id
+                    sessionStorage.ID_USUARIO = json.id_usuario
                     setTimeout(function () {
                         window.location = "../praticar/home/index.html";
                     }, 1000); 

@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Teclado(Acordes)</title>
     <link rel="stylesheet" href="../style.css">
 </head>
+
 <body>
 
 
@@ -36,8 +38,8 @@
     <audio id="B_Maior">
         <source src="../files/teclado/acordes/B_Maior.mp3" type="audio/mpeg">
     </audio>
-    
-    
+
+
     <audio id="C_Menor">
         <source src="../files/teclado/acordes/C_Menor.mp3" type="audio/mpeg">
     </audio>
@@ -59,15 +61,21 @@
     <audio id="B_Menor">
         <source src="../files/teclado/acordes/B_Menor.mp3" type="audio/mpeg">
     </audio>
-    
+
 
 
     <div id="div_mensagem"></div>
-    
+
+    <a href="/"></a>
+    "application/json"
+
 
 </body>
+
 </html>
 <script>
+    var fk_usuario = 1;
+    var fk_instrumento = 3;
     var categoria = localStorage.getItem("categoria");
     var qtQuestoes = Number(localStorage.getItem("questoes"));
     var questaoAtual = 1;
@@ -75,53 +83,55 @@
     var tipo = Math.floor(Math.random() * 2);
     var acordes = [
         [
-        document.getElementById("C_Maior"),
-        document.getElementById("D_Maior"),
-        document.getElementById("E_Maior"),
-        document.getElementById("F_Maior"),
-        document.getElementById("G_Maior"),
-        document.getElementById("A_Maior"),
-        document.getElementById("B_Maior")
+            document.getElementById("C_Maior"),
+            document.getElementById("D_Maior"),
+            document.getElementById("E_Maior"),
+            document.getElementById("F_Maior"),
+            document.getElementById("G_Maior"),
+            document.getElementById("A_Maior"),
+            document.getElementById("B_Maior")
         ],
 
-        [        
-        document.getElementById("C_Menor"),
-        document.getElementById("D_Menor"),
-        document.getElementById("E_Menor"),
-        document.getElementById("F_Menor"),
-        document.getElementById("G_Menor"),
-        document.getElementById("A_Menor"),
-        document.getElementById("B_Menor")
-    ]
+        [
+            document.getElementById("C_Menor"),
+            document.getElementById("D_Menor"),
+            document.getElementById("E_Menor"),
+            document.getElementById("F_Menor"),
+            document.getElementById("G_Menor"),
+            document.getElementById("A_Menor"),
+            document.getElementById("B_Menor")
+        ]
     ];
 
     function play() {
-  
+
         acordes[tipo][acorde].play();
-}
+    }
 
     function btn_Maior() {
 
         if (0 == tipo) {
             div_mensagem.innerHTML = 'Resposta certa'
-         } else {
+        } else {
             div_mensagem.innerHTML = 'Resposta errada'
-         }
+        }
     }
 
     function btn_Menor() {
 
-         if (1 == tipo) {
+        if (1 == tipo) {
             div_mensagem.innerHTML = 'Resposta certa'
-         } else {
+        } else {
             div_mensagem.innerHTML = 'Resposta errada'
-         }
+        }
     }
 
     function btn_next() {
-        if(questaoAtual > qtQuestoes) {
+        if (questaoAtual > qtQuestoes) {
             alert("Exercicio concluido")
-            window.location.href = 'index.html'
+            // window.location.href = 'index.html'
+            salvar();
+
         }
 
         acorde = Math.floor(Math.random() * 7);
@@ -130,6 +140,35 @@
         div_mensagem.innerHTML = `${categoria}, Quantidade: ${qtQuestoes}, Atual: ${questaoAtual}`;
 
         questaoAtual++;
+    }
+
+
+    function salvar() {
+        var fk_usuario = sessionStorage.ID_USUARIO
+        console.log(fk_usuario, fk_instrumento, categoria)
+
+        fetch("/exercicios/salvar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                fk_usuarioServer: fk_usuario,
+                fk_instrumentoServer: fk_instrumento,
+                tipo_exercicioServer: categoria
+            }),
+        }).then(function(resposta){
+            if(resposta.ok){
+                console.log("Dados salvos")
+            } else{
+                console.log("Erro ao salvar dados")
+            }
+        })
+        .catch(function(erro){
+            console.error("Erro: ", erro)
+        })
+
+
     }
 
 </script>
