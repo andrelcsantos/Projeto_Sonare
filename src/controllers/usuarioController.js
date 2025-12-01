@@ -20,7 +20,7 @@ function autenticar(req, res) {
                         console.log(resultadoAutenticar);
                         
                         res.json({
-                            id: resultadoAutenticar[0].id,
+                            id_usuario: resultadoAutenticar[0].id_usuario,
                             email: resultadoAutenticar[0].email,
                             nome: resultadoAutenticar[0].nome,
                             senha: resultadoAutenticar[0].senha
@@ -77,7 +77,27 @@ function cadastrar(req, res) {
     }
 }
 
+
+
+
+
+function listar(req, res) {
+    usuarioModel.listar()
+        .then(function (resultado) {
+            if (resultado.length > 0) {
+                res.json(resultado);
+            } else {
+                res.status(204).send("Nenhum resultado encontrado!");
+            }
+        })
+        .catch(function (erro) {
+            console.log("Erro ao buscar usuários:", erro);
+            res.status(500).json(erro.sqlMessage);
+        });
+}
+
 module.exports = {
     autenticar,
-    cadastrar
+    cadastrar,
+    listar
 }

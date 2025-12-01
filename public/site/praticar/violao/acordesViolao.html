@@ -66,6 +66,14 @@
 </body>
 </html>
 <script>
+    var fk_usuario = 1;
+    var fk_instrumento = 2;
+    var categoria = localStorage.getItem("categoria");
+    var qtQuestoes = Number(localStorage.getItem("questoes"));
+    var questaoAtual = 1;
+    var acorde = Math.floor(Math.random() * 7);
+    var tipo = Math.floor(Math.random() * 2);
+
     var acordes = [
         [
         document.getElementById("C_Maior"),
@@ -88,8 +96,6 @@
     ]
     ];
 
-    var acorde = Math.floor(Math.random() * 7);
-    var tipo = Math.floor(Math.random() * 2);
 
 
     function play() {
@@ -118,7 +124,41 @@
     function btn_next() {
         acorde = Math.floor(Math.random() * 7);
         tipo = Math.floor(Math.random() * 2);
-        div_mensagem.innerHTML = "";
+        div_mensagem.innerHTML = `Ex atual: ${questaoAtual} / Última questão: ${qtQuestoes}`;
+        questaoAtual++;
+        
+
+        if(questaoAtual > qtQuestoes) {
+            div_mensagem.innerHTML = 'Exercício concluido'
+            salvar();
+        }
+    }
+
+    function salvar() {
+        console.log(fk_usuario, fk_instrumento, categoria)
+
+        fetch("/exercicios/salvar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                fk_usuarioServer: fk_usuario,
+                fk_instrumentoServer: fk_instrumento,
+                tipo_exercicioServer: categoria
+            }),
+        }).then(function(resposta){
+            if(resposta.ok){
+                console.log("Dados salvos")
+            } else{
+                console.log("Erro ao salvar dados")
+            }
+        })
+        .catch(function(erro){
+            console.error("Erro: ", erro)
+        })
+
+
     }
 
 

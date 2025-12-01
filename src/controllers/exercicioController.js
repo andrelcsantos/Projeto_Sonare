@@ -4,6 +4,8 @@ function salvar(req, res) {
   var fkUsuario = req.body.fk_usuarioServer;
   var fkInstrumento = req.body.fk_instrumentoServer;
   var tipoExercicio = req.body.tipo_exercicioServer;
+  var acertos = req.body.respostas_certasServer;
+  var erros = req.body.respostas_erradasServer;
 
 
 if (fkUsuario == undefined ) {
@@ -12,8 +14,12 @@ if (fkUsuario == undefined ) {
       res.status(400).send("Seu instrumento está indefinida!");
     } else if(tipoExercicio == undefined){
       res.status(400).send("O tipo do exercício não está definido!");
-    } else {
-      exercicioModel.salvar(fkUsuario, fkInstrumento, tipoExercicio)
+    } else if(acertos == undefined){
+        res.status(400).send("Os acertos não estão definidos!");
+    } else if(erros == undefined){
+        res.status(400).send("Os erros não estão definidos!");
+    } else{
+      exercicioModel.salvar(fkUsuario, fkInstrumento, tipoExercicio, acertos, erros)
             .then(
                 function (resultadoAutenticar) {
                     console.log(`\nResultados encontrados: ${resultadoAutenticar.length}`);
@@ -26,7 +32,8 @@ if (fkUsuario == undefined ) {
                             fkUsuario: resultadoAutenticar[0].fkUsuario,
                             fkInstrumento: resultadoAutenticar[0].fkInstrumento,
                             tipoExercicio: resultadoAutenticar[0].tipoExercicio,
-                            dia: resultadoAutenticar[0].dia
+                            acertos: resultadoAutenticar[0].acertos,
+                            erros: resultadoAutenticar[0].erros
                         });
                     
                     } else if (resultadoAutenticar.length == 0) {
@@ -38,15 +45,89 @@ if (fkUsuario == undefined ) {
             ).catch(
                 function (erro) {
                     console.log(erro);
-                    console.log("\nHouve um erro ao realizar o login! Erro: ", erro.sqlMessage);
+                    console.log("\nHouve ao inserir dados na tabela exercicio! Erro: ", erro.sqlMessage);
                     res.status(500).json(erro.sqlMessage);
                 }
             );
     }
   }
 
+  function diasConsecutivos(req, res) {
+    var fkUsuario = req.params.fkUsuario;
+
+    exercicioModel.diasConsecutivos(fkUsuario)
+        .then(
+            function (resultado) {
+                if (resultado.length > 0) {
+                    res.json(resultado[0]);
+                } else {
+                    res.status(204).send("Nenhum resultado encontrado!");
+                }
+            })
+        .catch(
+            function (erro) {
+                console.log(
+                    "Houve um erro ao buscar os dias consecutivos: ",
+                    erro.sqlMessage
+                );
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+}
+
+function acertos(req, res) {
+    var fkInstrumento = req.params.fkInstrumento;
+
+    exercicioModel.acertos(fkInstrumento)
+        .then(
+            function (resultado) {
+                if (resultado.length > 0) {
+                    res.json(resultado[0]);
+                } else {
+                    res.status(204).send("Nenhum resultado encontrado!");
+                }
+            })
+        .catch(
+            function (erro) {
+                console.log(
+                    "Houve um erro ao buscar acertos dos instrumentos: ",
+                    erro.sqlMessage
+                );
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+}
+
+function erros(req, res) {
+    var fkInstrumento = req.params.fkInstrumento;
+
+    exercicioModel.erros(fkInstrumento)
+        .then(
+            function (resultado) {
+                if (resultado.length > 0) {
+                    res.json(resultado[0]);
+                } else {
+                    res.status(204).send("Nenhum resultado encontrado!");
+                }
+            })
+        .catch(
+            function (erro) {
+                console.log(
+                    "Houve um erro ao buscar erros dos instrumentos: ",
+                    erro.sqlMessage
+                );
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+}
+
+
+
   module.exports = {
-    salvar
+    salvar,
+    diasConsecutivos,
+    acertos,
+    erros
 }
 
 

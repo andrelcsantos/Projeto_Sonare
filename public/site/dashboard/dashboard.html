@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <link rel="shortcut icon" href="../assets/icon/favicon2.ico" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sonare | Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <div class="janela">
+        <div class="header-left">
+            <h1>Sonare</h1>
+
+            <div class="hello">
+                <h3>Olá, <span id="b_usuario">usuário</span>!</h3>
+            </div>
+
+            <div class="btn-nav-white">
+                <a href="./index.html">
+                    <h3>Exercícios</h3>
+                </a>
+            </div>
+
+            <div class="btn-nav">
+                <a href="./dashboard.html">
+                    <h3>Perfil</h3>
+                </a>
+            </div>
+
+
+            <div class="btn-logout" onclick="limparSessao()">
+                <h3>Sair</h3>
+            </div>
+        </div>
+
+        <div class="dash">
+            <div id="alerta">
+            </div>
+
+            <div class="btns-dash" id="btnAquario">
+                <!-- O gráfico é chamado de acordo com o id (fk_aquario) do banco  -->
+            </div>
+            <div id="graficos">
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="config-container">
+        <h2 class="config-title">Baixo</h2>
+        <div id="acertos_bass"><b>Acertos:</b></div>
+        <div id="erros_bass"><b>Erros:</b></div>
+
+
+        
+    </div>
+
+    <div class="config-container">
+        <h2 class="config-title">Violão</h2>
+        <div id="acertos_violao"><b>Acertos:</b></div>
+        <div id="erros_violao"><b>Erros:</b></div>
+    </div>
+
+
+    <div class="config-container">
+        <h2 class="config-title">Teclado</h2>
+        <div id="acertos_teclado"><b>Acertos:</b></div>
+        <div id="erros_teclado"><b>Erros:</b></div>
+    </div>
+    
+</body>
+</html>
+
+<script>
+    setTimeout(dadosBass, 10);
+    setTimeout(dadosViolao, 20);
+    setTimeout(dadosTeclado, 30);
+    var fkUsuario = sessionStorage.ID_USUARIO;
+    b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
+    var categoria = 'Acordes';
+    var qtQuestoes = 5;
+
+    function selectInstrumento(tipo_ins){
+        instrumento = tipo_ins;
+    }
+
+    function selectCategoria(tipo_exe){
+        categoria = tipo_exe;
+    }
+
+    function selectQt(qt) {
+        qtQuestoes = qt;
+    }
+
+    function praticar() {
+        localStorage.setItem("categoria", categoria);
+        localStorage.setItem("questoes", qtQuestoes);
+
+        if(instrumento == 1) {
+            if(categoria == 'Notas') {
+            window.location.href = "../praticar/bass/notasBass.html";
+        } else {
+            window.location.href = "../praticar/bass/acordesBass.html";
+        }
+    }
+        
+        if(instrumento == 2){
+            if(categoria == 'Notas') {
+            window.location.href = "../praticar/violao/notasViolao.html";
+        } else {
+            window.location.href = "../praticar/violao/acordesViolao.html";
+        }
+    }
+
+        if(instrumento == 3){
+            if(categoria == 'Notas') {
+            window.location.href = "../praticar/teclado/notasTeclado.html";
+        } else {
+            window.location.href = "../praticar/teclado/acordesTeclado.html";
+        }
+    }
+}
+
+function dadosBass() { 
+    var fkInstrumento = 1;
+    fetch(`/exercicios/acertos/${fkInstrumento}`)
+    .then(res => res.json())
+    .then(dados => {
+        const div = document.getElementById("acertos_bass");
+        if(dados && dados.total_acertos != undefined) {
+            const acertos = dados.total_acertos;
+            div.innerHTML = `<b>Acertos:</b> ${acertos}`;
+        } else {
+            div.innerHTML = 0;
+        }
+    })
+
+    fetch(`/exercicios/erros/${fkInstrumento}`)
+    .then(res => res.json())
+    .then(dados => {
+        const div = document.getElementById("erros_bass");
+        if(dados && dados.total_erros != undefined) {
+            const erros = dados.total_erros;
+            div.innerHTML = `<b>Erros:</b> ${erros}`;
+        } else {
+            div.innerHTML = 0;
+        }
+    })
+} 
+
+function dadosViolao() {
+    var fkInstrumento = 2;
+    fetch(`/exercicios/acertos/${fkInstrumento}`)
+    .then(res => res.json())
+    .then(dados => {
+        const div = document.getElementById("acertos_violao");
+        if(dados && dados.total_acertos != undefined) {
+            const acertos = dados.total_acertos;
+            div.innerHTML = `<b>Acertos:</b> ${acertos}`;
+        } else {
+            div.innerHTML = 0;
+        }
+    })
+
+    fetch(`/exercicios/erros/${fkInstrumento}`)
+    .then(res => res.json())
+    .then(dados => {
+        const div = document.getElementById("erros_violao");
+        if(dados && dados.total_erros != undefined) {
+            const erros = dados.total_erros;
+            div.innerHTML = `<b>Erros:</b> ${erros}`;
+        } else {
+            div.innerHTML = 0;
+        }
+    })
+    
+ } 
+
+function dadosTeclado() {
+    var fkInstrumento = 3;
+    fetch(`/exercicios/acertos/${fkInstrumento}`)
+    .then(res => res.json())
+    .then(dados => {
+        const div = document.getElementById("acertos_teclado");
+        if(dados && dados.total_acertos != undefined) {
+            const acertos = dados.total_acertos;
+            div.innerHTML = `<b>Acertos:</b> ${acertos}`;
+        } else {
+            div.innerHTML = 0;
+        }
+    })
+
+    fetch(`/exercicios/erros/${fkInstrumento}`)
+    .then(res => res.json())
+    .then(dados => {
+        const div = document.getElementById("erros_teclado");
+        if(dados && dados.total_erros != undefined) {
+            const erros = dados.total_erros;
+            div.innerHTML = `<b>Erros:</b> ${erros}`;
+        } else {
+            div.innerHTML = 0;
+        }
+    })
+ } 
+
+    fetch(`/exercicios/diasConsecutivos/${fkUsuario}`)
+    .then(res => res.json())
+    .then(dados => {
+        const div = document.getElementById("diasConsecutivos_kpi");
+        if(dados && dados.dias_consecutivos != undefined) {
+            const dias = dados.dias_consecutivos;
+            div.innerHTML = `Dias consecutivos: ${dias}`;
+        } else {
+            div.innerHTML = 0;
+        }
+    })
+    .catch(err => {
+        console.error("Erro ao exibir dias", err);
+    });
+    
+
+</script>

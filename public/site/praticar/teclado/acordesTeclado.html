@@ -62,25 +62,22 @@
         <source src="../files/teclado/acordes/B_Menor.mp3" type="audio/mpeg">
     </audio>
 
-
-
     <div id="div_mensagem"></div>
-
-    <a href="/"></a>
-    "application/json"
-
 
 </body>
 
 </html>
 <script>
-    var fk_usuario = 1;
+    var fk_usuario = sessionStorage.ID_USUARIO;
     var fk_instrumento = 3;
     var categoria = localStorage.getItem("categoria");
     var qtQuestoes = Number(localStorage.getItem("questoes"));
     var questaoAtual = 1;
     var acorde = Math.floor(Math.random() * 7);
     var tipo = Math.floor(Math.random() * 2);
+    var acertos = 0;
+    var erros = 0;
+    
     var acordes = [
         [
             document.getElementById("C_Maior"),
@@ -103,6 +100,7 @@
         ]
     ];
 
+    div_mensagem.innerHTML = `acertos: ${acertos}, erros: ${erros}, questão atual: ${questaoAtual}, quantidade: ${qtQuestoes}`
     function play() {
 
         acordes[tipo][acorde].play();
@@ -111,41 +109,35 @@
     function btn_Maior() {
 
         if (0 == tipo) {
-            div_mensagem.innerHTML = 'Resposta certa'
+            acertos++;
         } else {
-            div_mensagem.innerHTML = 'Resposta errada'
+            erros++;
         }
     }
 
     function btn_Menor() {
 
         if (1 == tipo) {
-            div_mensagem.innerHTML = 'Resposta certa'
+            acertos++;
         } else {
-            div_mensagem.innerHTML = 'Resposta errada'
+            erros++;
         }
     }
 
     function btn_next() {
-        if (questaoAtual > qtQuestoes) {
-            alert("Exercicio concluido")
-            // window.location.href = 'index.html'
-            salvar();
-
-        }
-
-        acorde = Math.floor(Math.random() * 7);
-        tipo = Math.floor(Math.random() * 2);
-
-        div_mensagem.innerHTML = `${categoria}, Quantidade: ${qtQuestoes}, Atual: ${questaoAtual}`;
-
-        questaoAtual++;
+        div_mensagem.innerHTML = `acertos: ${acertos}, erros: ${erros}, questão atual: ${questaoAtual}, quantidade: ${qtQuestoes}`
+        if(questaoAtual < qtQuestoes){
+            acorde = Math.floor(Math.random() * 7);
+            tipo = Math.floor(Math.random() * 2);
+            questaoAtual++;
+        } else {
+        salvar();
+        }      
     }
 
 
     function salvar() {
-        var fk_usuario = sessionStorage.ID_USUARIO
-        console.log(fk_usuario, fk_instrumento, categoria)
+        console.log(fk_usuario, fk_instrumento, categoria, acertos, erros)
 
         fetch("/exercicios/salvar", {
             method: "POST",
@@ -155,7 +147,9 @@
             body: JSON.stringify({
                 fk_usuarioServer: fk_usuario,
                 fk_instrumentoServer: fk_instrumento,
-                tipo_exercicioServer: categoria
+                tipo_exercicioServer: categoria,
+                respostas_certasServer: acertos,
+                respostas_erradasServer: erros
             }),
         }).then(function(resposta){
             if(resposta.ok){

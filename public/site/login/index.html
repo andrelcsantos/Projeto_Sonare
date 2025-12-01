@@ -28,9 +28,14 @@
             </div>
             <button type="submit" class="login" onclick="login()">Login</button>
 
+            <div id="div_aguardar" class="loading-div">
+                <img src="./assets/circle-loading.gif" id="loading-gif">
+            </div>
+
             <div class="registro-link">
                 <p>Não tem uma conta? <a href="../cadastro/index.html">Cadastre-se</a></p>
             </div>
+
 
     </main>
 </body>
@@ -38,8 +43,18 @@
 <script>
 
     function login() {
+        // aguardar();
         var email = input_email.value;
         var senha = input_senha.value;
+
+        if (email == "" || senha == "") {
+            cardErro.style.display = "block"
+            mensagem_erro.innerHTML = "(Mensagem de erro para todos os campos em branco)";
+            finalizarAguardar();
+            return false;
+        } else {
+            setInterval(sumirMensagem, 5000)
+        }
 
         if(!email.includes('@') || !email.includes('.com') || email == '' || senha == '') {
             if (!email.includes('@') || !email.includes('.com')) {
@@ -51,27 +66,27 @@
             fetch("/usuarios/autenticar", {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
             },
             body: JSON.stringify({
                 emailServer: email,
                 senhaServer: senha
             })
         }).then(function (resposta) {
-            console.log("ESTOU NO THEN DO entrar()!")
+            console.log("ESTOU NO THEN DO login()!")
 
             if (resposta.ok) {
               alert('Login')
                 console.log(resposta);
 
                 resposta.json().then(json => {
-                    console.jsonlog(json);
+                    console.log(json);
                     console.log(JSON.stringify(json));
                     sessionStorage.EMAIL_USUARIO = json.email;
                     sessionStorage.NOME_USUARIO = json.nome;
                     sessionStorage.ID_USUARIO = json.id_usuario
                     setTimeout(function () {
-                        window.location = "../praticar/home/index.html";
+                        window.location = "../dashboard/index.html";
                     }, 1000); 
 
                 });
@@ -82,14 +97,17 @@
 
                 resposta.text().then(texto => {
                     console.error(texto);
+                    finalizarAguardar(texto);
                 });
             }
 
         }).catch(function (erro) {
             console.log(erro);
         })
+    }
+    }
 
-       
-      }
+    function sumirMensagem() {
+        cardErro.style.display = "none"
     }
 </script>

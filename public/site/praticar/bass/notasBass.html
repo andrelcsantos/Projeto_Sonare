@@ -70,7 +70,12 @@
 
     var btn_selecionado = 0;
     var aleatorio = Math.floor(Math.random() * 7);
+    var categoria = localStorage.getItem("categoria");
+    var qtQuestoes = Number(localStorage.getItem("questoes"));
+    var questaoAtual = 1;
     var nota = 0;
+    var fk_instrumento = 1;
+    var fk_usuario = 1;
 
 
     function play() {
@@ -124,5 +129,38 @@
     function btn_next() {
         aleatorio = Math.floor(Math.random() * 7);
         div_mensagem.innerHTML = "";
+       
+        if(questaoAtual > qtQuestoes) {
+            salvar();
+        }
+
+        questaoAtual++;
+    }
+
+     function salvar() {
+
+        console.log(fk_usuario, fk_instrumento, categoria)
+
+        fetch("/exercicios/salvar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                fk_usuarioServer: fk_usuario,
+                fk_instrumentoServer: fk_instrumento,
+                tipo_exercicioServer: categoria
+            }),
+        }).then(function(resposta){
+            if(resposta.ok){
+                console.log("Dados salvos")
+            } else{
+                console.log("Erro ao salvar dados")
+            }
+        })
+        .catch(function(erro){
+            console.error("Erro: ", erro)
+        })
+    
     }
 </script>

@@ -65,7 +65,14 @@
 
     var btn_selecionado = 0;
     var aleatorio = Math.floor(Math.random() * 7);
+    var categoria = localStorage.getItem("categoria");
+    var qtQuestoes = Number(localStorage.getItem("questoes"));
+    var questaoAtual = 1;
     var nota = 0;
+    var acertos = 0;
+    var erros = 0;
+    var fk_instrumento = 3;
+    var fk_usuario = sessionStorage.ID_USUARIO;
 
 
     function play() {
@@ -110,16 +117,47 @@
 
     function btn_verificar() {
         if(nota != btn_selecionado) {
-            div_mensagem.innerHTML = 'nota errada';
+            erros++;
         } else {
-            div_mensagem.innerHTML = 'nota certa';
+            acertos++;
         }
     }
 
     function btn_next() {
-        aleatorio = Math.floor(Math.random() * 7);
-        div_mensagem.innerHTML = "";
+        for(var i = 0; questaoAtual < qtQuestoes; i++){
+            questaoAtual++
+            aleatorio = Math.floor(Math.random() * 7);
+
+        } salvar();
     }
 
+    function salvar() {
+
+        console.log(fk_usuario, fk_instrumento, categoria, acertos, erros)
+
+        fetch("/exercicios/salvar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                fk_usuarioServer: fk_usuario,
+                fk_instrumentoServer: fk_instrumento,
+                tipo_exercicioServer: categoria,
+                respostas_certas: acertos,
+                respostas_erradas: erros
+            }),
+        }).then(function(resposta){
+            if(resposta.ok){
+                console.log("Dados salvos")
+            } else{
+                console.log("Erro ao salvar dados")
+            }
+        })
+        .catch(function(erro){
+            console.error("Erro: ", erro)
+        })
+    
+    }
 
 </script>
