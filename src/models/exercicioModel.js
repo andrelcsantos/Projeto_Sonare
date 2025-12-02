@@ -31,16 +31,30 @@ WHERE DATEDIFF(CURDATE(), dia) <= (
   return database.executar(instrucaoSql);
 }
 
-function acertos(fkInstrumento) {
+function acertosAc(fkInstrumento) {
   var instrucaoSql = `
-  SELECT SUM(respostas_certas) AS total_acertos FROM exercicio WHERE fk_instrumento = ${fkInstrumento};`;
+  SELECT SUM(respostas_certas) AS total_acertos_ac FROM exercicio WHERE fk_instrumento = ${fkInstrumento} AND tipo_exercicio = 'Acordes';`;
   console.log("Executando a instrução SQL: \n" + instrucaoSql);
   return database.executar(instrucaoSql);
 }
 
-function erros(fkInstrumento) {
+function acertosNt(fkInstrumento) {
   var instrucaoSql = `
-  SELECT SUM(respostas_erradas) AS total_erros FROM exercicio WHERE fk_instrumento = ${fkInstrumento};`;
+  SELECT SUM(respostas_certas) AS total_acertos_nt FROM exercicio WHERE fk_instrumento = ${fkInstrumento} AND tipo_exercicio = 'Notas';`;
+  console.log("Executando a instrução SQL: \n" + instrucaoSql);
+  return database.executar(instrucaoSql);
+}
+
+function errosAc(fkInstrumento) {
+  var instrucaoSql = `
+  SELECT SUM(respostas_erradas) AS total_erros_ac FROM exercicio WHERE fk_instrumento = ${fkInstrumento} AND tipo_exercicio = 'Acordes';`;
+  console.log("Executando a instrução SQL: \n" + instrucaoSql);
+  return database.executar(instrucaoSql);
+}
+
+function errosNt(fkInstrumento) {
+  var instrucaoSql = `
+  SELECT SUM(respostas_erradas) AS total_erros_nt FROM exercicio WHERE fk_instrumento = ${fkInstrumento} AND tipo_exercicio = 'Notas';`;
   console.log("Executando a instrução SQL: \n" + instrucaoSql);
   return database.executar(instrucaoSql);
 }
@@ -48,8 +62,10 @@ function erros(fkInstrumento) {
 module.exports = {
   salvar,
   diasConsecutivos,
-  acertos,
-  erros
+  acertosAc,
+  acertosNt,
+  errosAc,
+  errosNt
 }
 
 // function buscarAquariosPorEmpresa(empresaId) {

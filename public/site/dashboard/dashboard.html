@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../site/img/logo.png" type="image/x-icon">
     <title>Sonare | Dashboard</title>
     <link rel="stylesheet" href="dashboard.css">
 </head>
@@ -49,27 +50,52 @@
     </div>
 
     
-    <div class="config-container">
+    <!-- <div class="config-container">
         <h2 class="config-title">Baixo</h2>
         <div id="acertos_bass"><b>Acertos:</b></div>
         <div id="erros_bass"><b>Erros:</b></div>
 
 
         
-    </div>
+    </div> -->
 
     <div class="config-container">
-        <h2 class="config-title">Violão</h2>
-        <div id="acertos_violao"><b>Acertos:</b></div>
-        <div id="erros_violao"><b>Erros:</b></div>
+        <h1 class="config-title">Dias Consecultivos:</h1>
+        <div id="diasConsecutivos_kpi"><b></b></div>
     </div>
 
 
-    <div class="config-container">
-        <h2 class="config-title">Teclado</h2>
-        <div id="acertos_teclado"><b>Acertos:</b></div>
-        <div id="erros_teclado"><b>Erros:</b></div>
-    </div>
+    <div class="instrumentos-row">
+        <div class="config-container">
+            <h1 class="config-title">Violão</h1> <br>
+            <div><h2>Acordes</h2></div>
+            <b>Acertos:</b>
+            <div id="acertos_violao_ac"><b></b></div> <br>
+            <b>Erros:</b>
+            <div id="erros_violao_ac"><b></b></div> <br>
+
+            <div><h2>Notas</h2></div>
+            <b>Acertos:</b>
+            <div id="acertos_violao_nt"><b></b></div><br>
+            <b>Erros:</b>
+            <div id="erros_violao_nt"><b></b></div> <br>
+        </div>
+
+
+        <div class="config-container">
+            <h1 class="config-title">Teclado</h1> <br>
+            <div><h2>Acordes</h2></div>
+            <b>Acertos:</b>
+            <div id="acertos_teclado_ac"><b></b></div><br>
+            <b>Erros:</b>
+            <div id="erros_teclado_ac"><b></b></div> <br>
+
+            <div><h2>Notas</h2></div>
+            <b>Acertos:</b>
+            <div id="acertos_teclado_nt"><b></b></div> <br>
+            <b>Erros:</b>
+            <div id="erros_teclado_nt"><b></b></div> <br>
+        </div>
     
 </body>
 </html>
@@ -153,58 +179,101 @@ function dadosBass() {
 
 function dadosViolao() {
     var fkInstrumento = 2;
-    fetch(`/exercicios/acertos/${fkInstrumento}`)
-    .then(res => res.json())
-    .then(dados => {
-        const div = document.getElementById("acertos_violao");
-        if(dados && dados.total_acertos != undefined) {
-            const acertos = dados.total_acertos;
-            div.innerHTML = `<b>Acertos:</b> ${acertos}`;
-        } else {
-            div.innerHTML = 0;
-        }
-    })
 
-    fetch(`/exercicios/erros/${fkInstrumento}`)
+    fetch(`/exercicios/acertosAc/${fkInstrumento}`)
     .then(res => res.json())
     .then(dados => {
-        const div = document.getElementById("erros_violao");
-        if(dados && dados.total_erros != undefined) {
-            const erros = dados.total_erros;
-            div.innerHTML = `<b>Erros:</b> ${erros}`;
+        const div = document.getElementById("acertos_violao_ac");
+        if (dados && dados.total_acertos_ac != undefined) {
+            div.innerHTML = `${dados.total_acertos_ac}`;
         } else {
             div.innerHTML = 0;
         }
-    })
-    
- } 
+    });
+
+    fetch(`/exercicios/acertosNt/${fkInstrumento}`)
+    .then(res => res.json())
+    .then(dados => {
+        const div = document.getElementById("acertos_violao_nt");
+        if (dados && dados.total_acertos_nt != undefined) {
+            div.innerHTML = `${dados.total_acertos_nt}`;
+        } else {
+            div.innerHTML = 0;
+        }
+    });
+
+    fetch(`/exercicios/errosAc/${fkInstrumento}`)
+    .then(res => res.json())
+    .then(dados => {
+        const div = document.getElementById("erros_violao_ac");
+        if (dados && dados.total_erros_ac != undefined) {
+            div.innerHTML = `${dados.total_erros_ac}`;
+        } else {
+            div.innerHTML = 0;
+        }
+    });
+
+    fetch(`/exercicios/errosNt/${fkInstrumento}`)
+    .then(res => res.json())
+    .then(dados => {
+        const div = document.getElementById("erros_violao_nt");
+        if (dados && dados.total_erros_nt != undefined) {
+            div.innerHTML = `${dados.total_erros_nt}`;
+        } else {
+            div.innerHTML = 0;
+        }
+    });
+}
+
 
 function dadosTeclado() {
     var fkInstrumento = 3;
-    fetch(`/exercicios/acertos/${fkInstrumento}`)
-    .then(res => res.json())
-    .then(dados => {
-        const div = document.getElementById("acertos_teclado");
-        if(dados && dados.total_acertos != undefined) {
-            const acertos = dados.total_acertos;
-            div.innerHTML = `<b>Acertos:</b> ${acertos}`;
-        } else {
-            div.innerHTML = 0;
-        }
-    })
 
-    fetch(`/exercicios/erros/${fkInstrumento}`)
+    fetch(`/exercicios/acertosAc/${fkInstrumento}`)
     .then(res => res.json())
     .then(dados => {
-        const div = document.getElementById("erros_teclado");
-        if(dados && dados.total_erros != undefined) {
-            const erros = dados.total_erros;
-            div.innerHTML = `<b>Erros:</b> ${erros}`;
+        const div = document.getElementById("acertos_teclado_ac");
+        if (dados && dados.total_acertos_ac != undefined) {
+            div.innerHTML = `${dados.total_acertos_ac}`;
         } else {
             div.innerHTML = 0;
         }
-    })
- } 
+    });
+
+    fetch(`/exercicios/errosAc/${fkInstrumento}`)
+    .then(res => res.json())
+    .then(dados => {
+        const div = document.getElementById("erros_teclado_ac");
+        if (dados && dados.total_erros_ac != undefined) {
+            div.innerHTML = `${dados.total_erros_ac}`;
+        } else {
+            div.innerHTML = 0;
+        }
+    });
+
+    fetch(`/exercicios/acertosNt/${fkInstrumento}`)
+    .then(res => res.json())
+    .then(dados => {
+        const div = document.getElementById("acertos_teclado_nt");
+        if (dados && dados.total_acertos_nt != undefined) {
+            div.innerHTML = `${dados.total_acertos_nt}`;
+        } else {
+            div.innerHTML = 0;
+        }
+    });
+
+    fetch(`/exercicios/errosNt/${fkInstrumento}`)
+    .then(res => res.json())
+    .then(dados => {
+        const div = document.getElementById("erros_teclado_nt");
+        if (dados && dados.total_erros_nt != undefined) {
+            div.innerHTML = `${dados.total_erros_nt}`;
+        } else {
+            div.innerHTML = 0;
+        }
+    });
+}
+
 
     fetch(`/exercicios/diasConsecutivos/${fkUsuario}`)
     .then(res => res.json())
@@ -212,7 +281,7 @@ function dadosTeclado() {
         const div = document.getElementById("diasConsecutivos_kpi");
         if(dados && dados.dias_consecutivos != undefined) {
             const dias = dados.dias_consecutivos;
-            div.innerHTML = `Dias consecutivos: ${dias}`;
+            div.innerHTML = `${dias}`;
         } else {
             div.innerHTML = 0;
         }

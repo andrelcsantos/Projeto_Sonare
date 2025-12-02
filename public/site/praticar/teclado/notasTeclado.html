@@ -4,26 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Teclado(Notas)</title>
-    <link rel="stylesheet" href="../style.css">
+    <link rel="shortcut icon" href="../../img/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div>
-        <a href="./index.html">
-            <button><<<</button>
-        </a>
-    </div>
 
-    <button onclick="play()">Play</button> <br><br>
-    <button onclick="btn_C()">C</button>
-    <button onclick="btn_D()">D</button>
-    <button onclick="btn_E()">E</button>
-    <button onclick="btn_F()">F</button>
-    <button onclick="btn_G()">G</button>
-    <button onclick="btn_A()">A</button>
-    <button onclick="btn_B()">B</button> <br><br>
+    <div class="exercicio-container">
+        <div class="exercicio-conteudo">
+            <header class="exercicio-header">
+                <h2 class="config-title">Teclado</h2>
 
-    <button onclick="btn_verificar()">Verificar</button> 
-    <button onclick="btn_next()">></button>
+            </header>
+            <div class="config-option">
+                <div class="exercicio-options">
+                    <button onclick="play()">Play</button> <br><br>
+
+                        <div id="grupo-ins">
+                            <button id="btnC" onclick="btn_C()">C</button>
+                            <button id="btnD" onclick="btn_D()">D</button>
+                            <button id="btnE" onclick="btn_E()">E</button>
+                            <button id="btnF" onclick="btn_F()">F</button>
+                            <button id="btnG" onclick="btn_G()">G</button>
+                            <button id="btnA" onclick="btn_A()">A</button>
+                            <button id="btnB" onclick="btn_B()">B</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="exercicio-footer">
+                    <button class="verificar-question-btn" onclick="btn_verificar()">Verificar</button>
+                    <div id="div_mensagem"></div>
+                    <button class="next-question-btn" onclick="btn_next()">Próximo</button>
+                </div>
+            </div>
+        </div>
+
 
     <audio id="nota_C">
         <source src="../files/teclado/notas/Nota_C.mp3" type="audio/mpeg">
@@ -47,7 +62,7 @@
         <source src="../files/teclado/notas/Nota_B.mp3" type="audio/mpeg">
     </audio>
 
-    <div id="div_mensagem"></div>
+    
     
 
 </body>
@@ -63,7 +78,7 @@
         document.getElementById("nota_B")
     ];
 
-    var btn_selecionado = 0;
+    var btn_selecionado = -1;
     var aleatorio = Math.floor(Math.random() * 7);
     var categoria = localStorage.getItem("categoria");
     var qtQuestoes = Number(localStorage.getItem("questoes"));
@@ -72,7 +87,9 @@
     var acertos = 0;
     var erros = 0;
     var fk_instrumento = 3;
-    var fk_usuario = sessionStorage.ID_USUARIO;
+    var fk_usuario = 1;
+    var verificado = false;
+    div_mensagem.innerHTML = `${questaoAtual} de ${qtQuestoes} Questões`;
 
 
     function play() {
@@ -116,24 +133,75 @@
     }
 
     function btn_verificar() {
-        if(nota != btn_selecionado) {
+
+        if(btn_selecionado != -1){
+            verificado = true;
+            if(nota != btn_selecionado) {
             erros++;
+            if(nota == 0) {
+                btnC.style.backgroundColor = "#4CAF50"
+            } else if(nota == 1) {
+                btnD.style.backgroundColor = "#4CAF50"
+            } else if(nota == 2) {
+                btnE.style.backgroundColor = "#4CAF50"
+            } else if(nota == 3) {
+                btnF.style.backgroundColor = "#4CAF50"
+            } else if(nota == 4) {
+                btnG.style.backgroundColor = "#4CAF50"
+            } else if(nota == 5) {
+                btnA.style.backgroundColor = "#4CAF50"
+            } else {
+                btnB.style.backgroundColor = "#4CAF50"
+            }
+
         } else {
             acertos++;
+            if(btn_selecionado == 0) {
+                btnC.style.backgroundColor = "#4CAF50"
+            } else if(btn_selecionado == 1) {
+                btnD.style.backgroundColor = "#4CAF50"
+            } else if(btn_selecionado == 2) {
+                btnE.style.backgroundColor = "#4CAF50"
+            } else if(btn_selecionado == 3) {
+                btnF.style.backgroundColor = "#4CAF50"
+            } else if(btn_selecionado == 4) {
+                btnG.style.backgroundColor = "#4CAF50"
+            } else if(btn_selecionado == 5) {
+                btnA.style.backgroundColor = "#4CAF50"
+            } else {
+                btnB.style.backgroundColor = "#4CAF50"
+            }
         }
+        }
+        
     }
 
     function btn_next() {
-        for(var i = 0; questaoAtual < qtQuestoes; i++){
-            questaoAtual++
-            aleatorio = Math.floor(Math.random() * 7);
-
-        } salvar();
+        if(btn_selecionado != -1 && verificado == true) {
+        aleatorio = Math.floor(Math.random() * 7);
+        questaoAtual++;
+        div_mensagem.innerHTML = `${questaoAtual} de ${qtQuestoes} Questões`;
+        btnC.style.backgroundColor = "#FFF";
+        btnD.style.backgroundColor = "#FFF";
+        btnE.style.backgroundColor = "#FFF";
+        btnF.style.backgroundColor = "#FFF";
+        btnG.style.backgroundColor = "#FFF";
+        btnA.style.backgroundColor = "#FFF";
+        btnB.style.backgroundColor = "#FFF";
+        if(questaoAtual > qtQuestoes) {
+            alert(`Você acerto: ${acertos} e errou ${erros} de ${qtQuestoes} questões`)
+            window.location.href = "../../dashboard/index.html";
+            salvar();
+        }
+        btn_selecionado = -1;
+        verificado = false;
+        }
+        
     }
 
     function salvar() {
 
-        console.log(fk_usuario, fk_instrumento, categoria, acertos, erros)
+        console.log(fk_usuario, fk_instrumento, categoria)
 
         fetch("/exercicios/salvar", {
             method: "POST",
@@ -143,9 +211,7 @@
             body: JSON.stringify({
                 fk_usuarioServer: fk_usuario,
                 fk_instrumentoServer: fk_instrumento,
-                tipo_exercicioServer: categoria,
-                respostas_certas: acertos,
-                respostas_erradas: erros
+                tipo_exercicioServer: categoria
             }),
         }).then(function(resposta){
             if(resposta.ok){
@@ -159,5 +225,34 @@
         })
     
     }
+
+    function salvar() {
+        console.log(fk_usuario, fk_instrumento, categoria, acertos, erros)
+
+        fetch("/exercicios/salvar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                fk_usuarioServer: fk_usuario,
+                fk_instrumentoServer: fk_instrumento,
+                tipo_exercicioServer: categoria,
+                respostas_certasServer: acertos,
+                respostas_erradasServer: erros
+            }),
+        }).then(function(resposta){
+            if(resposta.ok){
+                console.log("Dados salvos")
+            } else{
+                console.log("Erro ao salvar dados")
+            }
+        })
+        .catch(function(erro){
+            console.error("Erro: ", erro)
+        })
+    
+    }
+
 
 </script>

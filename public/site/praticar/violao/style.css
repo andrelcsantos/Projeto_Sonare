@@ -17,22 +17,10 @@
 body{
   display: flex;
   padding: 15px;
-  justify-content: space-evenly;
   align-items: center;
+  justify-content: center;
   background: var(--second-color);
   min-height: 100vh;
-}
-
-.content-wrapper {
-  margin-left: 22%;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.instrumentos-row {
-  display: flex;
-  gap: 20px;
 }
 
 .header-left h1 {
@@ -124,21 +112,17 @@ body{
 }
 
 :where(.config-container, .exercicio-container, .result-container) {
+  /* display: none; */
   background-color: var(--branco-color);
   border-radius: 8px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.13);
 }
 
 .config-container {
-  width: 250px;
+  width: 415px;
   padding: 25px;
   text-align: center;
-}
-
-/* Dias Consecutivos ocupa toda a largura */
-.content-wrapper > .config-container:first-child {
-  width: 100%;
-  max-width: 520px;
+  
 }
 
 .config-container .config-title {
@@ -149,11 +133,11 @@ body{
   margin-top: 25px;
 }
 
-#diasConsecutivos_kpi {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: var(--main-color);
-  margin-top: 15px;
+.config-option .option-title {
+  font-size: 1.125rem;
+  font-weight: 500;
+  margin-bottom: 20px;
+  grid-template-columns: repeat(2, 1fr);
 }
 
 .config-option .exercicio-options {
@@ -167,6 +151,7 @@ body{
 .config-option .instrumentos-options {
   display: grid;
   gap: 15px;
+
 }
 
 .config-option button {
@@ -183,17 +168,32 @@ body{
 .config-option button.active{
   color: var(--branco-color);
   border-color: var(--second-color);
-  background: var(--main-color);
+  background: var(--second-color);
 }
 
 .config-option button:hover,
 .exercicio-conteudo .answer-option:hover {
-  background: var(--main-color);
-  color: #fff;
+  background: var(--second-color);
+  color: var(--main-color);
+  transition: all 0.3s ease;
 }
 
 .exercicio-options button{
   flex: 1 1 10%;
+}
+
+.config-container .praticar-btn,
+.result-container .try-again-btn{
+  color: var(--branco-color);
+  border: none;
+  cursor: pointer;
+  margin-top: 30px;
+  font-weight: 500;
+  background: var(--main-color);
+  padding: 13px 25px;
+  font-size: 1rem;
+  border-radius: 6px;
+  transition: background 0.3s ease;
 }
 
 .config-container .praticar-btn {
@@ -201,7 +201,6 @@ body{
 }
 
 .config-container .praticar-btn:hover,
-.exercicio-footer .next-question-btn:hover,
 .result-container .try-again-btn:hover{
   background: var(--second-color);
 }
@@ -210,29 +209,116 @@ body{
   width: 480px;
 }
 
+
 .exercicio-container .exercicio-header {
   display: flex;
+  background: var(--main-color);
+  border-radius: 8px;
   align-items: center;
   padding: 14px 25px;
-  justify-content: space-between;
+  justify-content: center;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.09);
 }
 
-.exercicio-header  {
-  display: flex;
-  width: 70px;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-weight: 600;
-  padding: 7px 9px;
-  border-radius: 6px;
-  background: #1A2E39;
+.exercicio-header .config-title {
+  color: var(--branco-color);
+  margin: 0;
 }
 
-.exercicio-header  span{
-  font-size: 1.4rem;
+
+
+
+
+.exercicio-container .config-option {
+  padding: 30px 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+#grupo-ins {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  width: 100%;
+  justify-content: center;
+}
+
+#grupo-ins button {
+  flex: 1;
+  max-width: 150px;
+  padding: 12px;
+}
+
+.exercicio-container .exercicio-footer {
+  padding: 15px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--second-color);
+  position: relative;
+}
+
+
+.next-question-btn {
+  color: var(--branco-color);
+  background: var(--main-color);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 1rem;
+  padding: 13px 25px;
+  transition: background 0.3s ease;
+  z-index: 1;
+}
+
+.next-question-btn:hover {
+  background: var(--second-color);
+}
+
+.verificar-question-btn {
+  color: var(--branco-color);
+  background: var(--main-color);
+  display: flex;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 1rem;
+  padding: 13px 25px;
+  transition: background 0.3s ease;
+  z-index: 1;
+}
+
+.verificar-question-btn:hover {
+  background: var(--second-color);
+}
+
+#div_mensagem {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  font-weight: 500;
+  pointer-events: none;
+}
+
+.config-option .exercicio-options {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+  max-width: 350px;
+}
+
+.exercicio-options > button:first-child {
+  width: 200px;
+  padding: 12px 30px;
+  font-size: 1rem;
+  font-weight: 600;
 }
 
 .exercicio-container .exercicio-conteudo {
@@ -264,7 +350,6 @@ body{
 }
 
 .exercicio-conteudo .answer-option span {
-  display: block;
   flex-shrink: 0;
   margin: -4px 3px -4px 12px;
 }
@@ -281,24 +366,10 @@ body{
   color: #721C24;
 }
 
-.exercicio-container .exercicio-footer {
-  padding: 15px 25px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-top: 1px solid var(--second-color);
-}
 
-.exercicio-footer .question-status {
-  font-weight: 500;
-}
 
-.exercicio-footer .question-status b,
-.result-container .result-message b{
-  font-weight: 600;
-}
 
-.exercicio-footer .next-question-btn{
+.exercicio-footer .next-question-btn .verificar-question-btn{
   display: inline-flex;
   gap: 5px;
   align-items: center;
@@ -309,6 +380,10 @@ body{
   text-align: center;
   padding: 40px;
   width: 410px;
+}
+
+.result-container {
+  /* width: 110px; */
 }
 
 .result-container .result-title {

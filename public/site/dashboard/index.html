@@ -5,6 +5,7 @@
     <link rel="shortcut icon" href="../assets/icon/favicon2.ico" type="image/x-icon">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" href="../site/img/logo.png" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sonare | Dashboard</title>
     <link rel="stylesheet" href="index.css">
@@ -54,27 +55,27 @@
         <h2 class="config-title">Escolha um instrumento </h2>
 
         <div class="config-option">
-            <div class="instrumentos-options">
-                <button class="instrumento-options" onclick="selectInstrumento(1)">Baixo</button>
-                <button class="instrumento-options" onclick="selectInstrumento(2)">Violão</button>
-                <button class="instrumento-options" onclick="selectInstrumento(3)">Teclado</button>
+            <div class="instrumentos-options" id="grupo-ins">
+                <!-- <button class="ins" onclick="selectInstrumento(1)">Baixo</button> -->
+                <button class="ins" onclick="selectInstrumento(2)">Violão</button>
+                <button class="ins" onclick="selectInstrumento(3)">Teclado</button>
             </div>
         </div>
 
         <div class="config-option">
             <h4 class="option-title">Tipo de exercício</h4>
-            <div class="exercicio-options">
-                <button class="exercicio-option" onclick="selectCategoria('Acordes')">Acordes</button>
-                <button class="exercicio-option" onclick="selectCategoria('Notas')">Notas</button>
+            <div class="exercicio-options" id="grupo-ex">
+                <button class="ex" onclick="selectCategoria('Acordes')">Acordes</button>
+                <button class="ex" onclick="selectCategoria('Notas')">Notas</button>
             </div>
         </div>
 
         <div class="config-option">
             <h4 class="option-title">Quantidade de questões</h4>
-            <div class="exercicio-options">
-                <button class="exercicio-option" onclick="selectQt(5)">5</button>
-                <button class="exercicio-option" onclick="selectQt(10)">10</button>
-                <button class="exercicio-option" onclick="selectQt(15)">15</button>
+            <div class="exercicio-options" id="grupo-qts">
+                <button class="qt" onclick="selectQt(5)">5</button>
+                <button class="qt" onclick="selectQt(10)">10</button>
+                <button class="qt" onclick="selectQt(15)">15</button>
             </div>
         </div>
 
@@ -106,7 +107,7 @@
         localStorage.setItem("categoria", categoria);
         localStorage.setItem("questoes", qtQuestoes);
 
-        if(instrumento == 1) {
+        if(fkInstrumento == 1) {
             if(categoria == 'Notas') {
             window.location.href = "../praticar/bass/notasBass.html";
         } else {
@@ -114,7 +115,7 @@
         }
     }
         
-        if(instrumento == 2){
+        if(fkInstrumento == 2){
             if(categoria == 'Notas') {
             window.location.href = "../praticar/violao/notasViolao.html";
         } else {
@@ -122,7 +123,7 @@
         }
     }
 
-        if(instrumento == 3){
+        if(fkInstrumento == 3){
             if(categoria == 'Notas') {
             window.location.href = "../praticar/teclado/notasTeclado.html";
         } else {
@@ -132,49 +133,76 @@
 }
 
 
-    fetch(`/exercicios/diasConsecutivos/${fkUsuario}`)
-    .then(res => res.json())
-    .then(dados => {
-        const div = document.getElementById("diasConsecutivos_kpi");
-        if(dados && dados.dias_consecutivos != undefined) {
-            const dias = dados.dias_consecutivos;
-            div.innerHTML = `Dias consecutivos: ${dias}`;
-        } else {
-            div.innerHTML = 0;
-        }
-    })
-    .catch(err => {
-        console.error("Erro ao exibir dias", err);
-    });
+    // fetch(`/exercicios/diasConsecutivos/${fkUsuario}`)
+    // .then(res => res.json())
+    // .then(dados => {
+    //     const div = document.getElementById("diasConsecutivos_kpi");
+    //     if(dados && dados.dias_consecutivos != undefined) {
+    //         const dias = dados.dias_consecutivos;
+    //         div.innerHTML = `Dias consecutivos: ${dias}`;
+    //     } else {
+    //         div.innerHTML = 0;
+    //     }
+    // })
+    // .catch(err => {
+    //     console.error("Erro ao exibir dias", err);
+    // });
     
 
 
-    fetch(`/exercicios/acertos/${fkInstrumento}`)
-    .then(res => res.json())
-    .then(dados => {
-        const div = document.getElementById("acertos_kpi");
-        if(dados && dados.total_acertos != undefined) {
-            const acertos = dados.total_acertos;
-            div.innerHTML = `Acertos: ${acertos}`;
-        } else {
-            div.innerHTML = 0;
-        }
-    })
+    // fetch(`/exercicios/acertos/${fkInstrumento}`)
+    // .then(res => res.json())
+    // .then(dados => {
+    //     const div = document.getElementById("acertos_kpi");
+    //     if(dados && dados.total_acertos != undefined) {
+    //         const acertos = dados.total_acertos;
+    //         div.innerHTML = `Acertos: ${acertos}`;
+    //     } else {
+    //         div.innerHTML = 0;
+    //     }
+    // })
 
 
 
 
-    fetch(`/exercicios/erros/${fkInstrumento}`)
-    .then(res => res.json())
-    .then(dados => {
-        const div = document.getElementById("erros_kpi");
-        if(dados && dados.total_erros != undefined) {
-            const erros = dados.total_erros;
-            div.innerHTML = `Erros: ${erros}`;
-        } else {
-            div.innerHTML = 0;
-        }
-    })
+    // fetch(`/exercicios/erros/${fkInstrumento}`)
+    // .then(res => res.json())
+    // .then(dados => {
+    //     const div = document.getElementById("erros_kpi");
+    //     if(dados && dados.total_erros != undefined) {
+    //         const erros = dados.total_erros;
+    //         div.innerHTML = `Erros: ${erros}`;
+    //     } else {
+    //         div.innerHTML = 0;
+    //     }
+    // })
+
+    function selectInstrumento(num) {
+        fkInstrumento = num;
+        const botoesIns = document.querySelectorAll('.ins');
+        botoesIns.forEach(botao => {
+        botao.classList.remove('active');
+    });
+        event.target.classList.add('active');
+    }
+
+    function selectCategoria(cat) {
+        categoria = cat;
+        const botoesCat = document.querySelectorAll('.ex');
+        botoesCat.forEach(botao => {
+        botao.classList.remove('active');
+    });
+        event.target.classList.add('active');
+    }
+
+    function selectQt(qt) {
+        qtQuestoes = qt;
+        const botoesQt = document.querySelectorAll('.qt');
+        botoesQt.forEach(botao => {
+        botao.classList.remove('active');
+    });
+        event.target.classList.add('active');
+    }
    
 
 </script>

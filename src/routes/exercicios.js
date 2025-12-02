@@ -15,12 +15,20 @@ router.post("/salvar", function (req, res) {
   exercicioController.salvar(req, res);
 })
 
-router.get("/acertos/:fkInstrumento", function (req, res) {
-  exercicioController.acertos(req, res);
+router.get("/acertosAc/:fkInstrumento", function (req, res) {
+  exercicioController.acertosAc(req, res);
 });
 
-router.get("/erros/:fkInstrumento", function (req, res) {
-  exercicioController.erros(req, res);
+router.get("/acertosNt/:fkInstrumento", function (req, res) {
+  exercicioController.acertosNt(req, res);
+});
+
+router.get("/errosAc/:fkInstrumento", function (req, res) {
+  exercicioController.errosAc(req, res);
+});
+
+router.get("/errosNt/:fkInstrumento", function (req, res) {
+  exercicioController.errosNt(req, res);
 });
 
 module.exports = router;

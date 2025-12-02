@@ -75,10 +75,10 @@ if (fkUsuario == undefined ) {
         );
 }
 
-function acertos(req, res) {
+function acertosAc(req, res) {
     var fkInstrumento = req.params.fkInstrumento;
 
-    exercicioModel.acertos(fkInstrumento)
+    exercicioModel.acertosAc(fkInstrumento)
         .then(
             function (resultado) {
                 if (resultado.length > 0) {
@@ -90,7 +90,7 @@ function acertos(req, res) {
         .catch(
             function (erro) {
                 console.log(
-                    "Houve um erro ao buscar acertos dos instrumentos: ",
+                    "Houve um erro ao buscar acertos dos exercícios de Acordes dos instrumentos: ",
                     erro.sqlMessage
                 );
                 res.status(500).json(erro.sqlMessage);
@@ -98,10 +98,10 @@ function acertos(req, res) {
         );
 }
 
-function erros(req, res) {
+function acertosNt(req, res) {
     var fkInstrumento = req.params.fkInstrumento;
 
-    exercicioModel.erros(fkInstrumento)
+    exercicioModel.acertosNt(fkInstrumento)
         .then(
             function (resultado) {
                 if (resultado.length > 0) {
@@ -113,7 +113,54 @@ function erros(req, res) {
         .catch(
             function (erro) {
                 console.log(
-                    "Houve um erro ao buscar erros dos instrumentos: ",
+                    "Houve um erro ao buscar acertos dos exercícios de Notas dos instrumentos: ",
+                    erro.sqlMessage
+                );
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+}
+
+function errosAc(req, res) {
+    var fkInstrumento = req.params.fkInstrumento;
+
+    exercicioModel.errosAc(fkInstrumento)
+        .then(
+            function (resultado) {
+                if (resultado.length > 0) {
+                    res.json(resultado[0]);
+                } else {
+                    res.status(204).send("Nenhum resultado encontrado!");
+                }
+            })
+        .catch(
+            function (erro) {
+                console.log(
+                    "Houve um erro ao buscar erros dos exercícios de Acordes dos instrumentos: ",
+                    erro.sqlMessage
+                );
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+}
+
+
+function errosNt(req, res) {
+    var fkInstrumento = req.params.fkInstrumento;
+
+    exercicioModel.errosNt(fkInstrumento)
+        .then(
+            function (resultado) {
+                if (resultado.length > 0) {
+                    res.json(resultado[0]);
+                } else {
+                    res.status(204).send("Nenhum resultado encontrado!");
+                }
+            })
+        .catch(
+            function (erro) {
+                console.log(
+                    "Houve um erro ao buscar erros dos exercícios de Notas dos instrumentos: ",
                     erro.sqlMessage
                 );
                 res.status(500).json(erro.sqlMessage);
@@ -126,8 +173,10 @@ function erros(req, res) {
   module.exports = {
     salvar,
     diasConsecutivos,
-    acertos,
-    erros
+    acertosAc,
+    acertosNt,
+    errosAc,
+    errosNt
 }
 
 

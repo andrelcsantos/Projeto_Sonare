@@ -4,14 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Violão(Acordes)</title>
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="../../img/logo.png" type="image/x-icon">
 </head>
 <body>
-    <button onclick="play()">Play</button> <br><br>
-    <button onclick="btn_Maior()">Maior</button>
-    <button onclick="btn_Menor()">Menor</button>
 
-    <button onclick="btn_next()">></button>
+    
+    
+    <div class="exercicio-container">
+        <div class="exercicio-conteudo">
+            <header class="exercicio-header">
+                <h2 class="config-title">Violão</h2>
+
+            </header>
+            <div class="config-option">
+                <div class="exercicio-options">
+                    <button onclick="play()">Play</button> <br><br>
+
+                        <div id="grupo-ins">
+                            <button id="btnMaior" onclick="btn_Maior()">Maior</button>
+                            <button id="btnMenor" onclick="btn_Menor()">Menor</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="exercicio-footer">
+                    <div id="div_mensagem"></div>
+                    <button class="next-question-btn" onclick="btn_next()">Próximo</button>
+                </div>
+            </div>
+        </div>
 
     <audio id="C_Maior">
         <source src="../files/violao/acordes/C_Maior.mp3" type="audio/mpeg">
@@ -57,22 +79,23 @@
     <audio id="B_Menor">
         <source src="../files/violao/acordes/B_Menor.mp3" type="audio/mpeg">
     </audio>
-    
 
-
-    <div id="div_mensagem"></div>
     
 
 </body>
 </html>
 <script>
-    var fk_usuario = 1;
+    var fk_usuario = sessionStorage.ID_USUARIO;
     var fk_instrumento = 2;
     var categoria = localStorage.getItem("categoria");
     var qtQuestoes = Number(localStorage.getItem("questoes"));
     var questaoAtual = 1;
     var acorde = Math.floor(Math.random() * 7);
     var tipo = Math.floor(Math.random() * 2);
+    var acertos = 0;
+    var erros = 0;
+    var validar = false;
+    div_mensagem.innerHTML = `${questaoAtual} de ${qtQuestoes} Questões`;
 
     var acordes = [
         [
@@ -106,36 +129,56 @@
     function btn_Maior() {
 
         if (0 == tipo) {
-            div_mensagem.innerHTML = 'Resposta certa'
+            acertos++;
+            btnMaior.style.backgroundColor = "#4CAF50"
+            btnMenor.style.backgroundColor = "#FFF"
          } else {
-            div_mensagem.innerHTML = 'Resposta errada'
+            erros++;
+            btnMaior.style.backgroundColor = "#FF746C";
+            btnMenor.style.backgroundColor = "#4CAF50"
          }
+         validar = true;
     }
 
     function btn_Menor() {
 
          if (1 == tipo) {
-            div_mensagem.innerHTML = 'Resposta certa'
+            acertos++;
+            btnMenor.style.backgroundColor = "#4CAF50"
+            btnMaior.style.backgroundColor = "#FFF"
          } else {
-            div_mensagem.innerHTML = 'Resposta errada'
+            erros++;
+            btnMenor.style.backgroundColor = "#FF746C";
+            btnMaior.style.backgroundColor = "#4CAF50"
          }
+         validar = true;
     }
 
     function btn_next() {
+
+        if(validar) {
         acorde = Math.floor(Math.random() * 7);
         tipo = Math.floor(Math.random() * 2);
-        div_mensagem.innerHTML = `Ex atual: ${questaoAtual} / Última questão: ${qtQuestoes}`;
         questaoAtual++;
+        div_mensagem.innerHTML = `${questaoAtual} de ${qtQuestoes} Questões`;
+        btnMaior.style.backgroundColor = "#FFF"
+        btnMenor.style.backgroundColor = "#FFF"
         
 
         if(questaoAtual > qtQuestoes) {
-            div_mensagem.innerHTML = 'Exercício concluido'
+            alert(`Você acerto: ${acertos} e errou ${erros} de ${qtQuestoes} questões`)
+            window.location.href = "../../dashboard/index.html";
             salvar();
         }
-    }
+        btn_selecionado = -1;
+        validar = false;
+        }
+            
+
+        }
 
     function salvar() {
-        console.log(fk_usuario, fk_instrumento, categoria)
+        console.log(fk_usuario, fk_instrumento, categoria, acertos, erros)
 
         fetch("/exercicios/salvar", {
             method: "POST",
@@ -145,7 +188,9 @@
             body: JSON.stringify({
                 fk_usuarioServer: fk_usuario,
                 fk_instrumentoServer: fk_instrumento,
-                tipo_exercicioServer: categoria
+                tipo_exercicioServer: categoria,
+                respostas_certasServer: acertos,
+                respostas_erradasServer: erros
             }),
         }).then(function(resposta){
             if(resposta.ok){
@@ -160,6 +205,4 @@
 
 
     }
-
-
 </script>

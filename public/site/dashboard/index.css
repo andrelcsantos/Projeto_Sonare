@@ -175,6 +175,7 @@ body{
 .exercicio-conteudo .answer-option:hover {
   background: var(--main-color);
   color: #fff;
+  transition: all 0.3s ease;
 }
 
 .exercicio-options button{
@@ -249,7 +250,7 @@ body{
   display: flex;
   gap: 15px;
   flex-direction: column;
-  list-style: none;
+  /* list-style: none; */
   margin-top: 20px;
 }
 
@@ -265,7 +266,7 @@ body{
 }
 
 .exercicio-conteudo .answer-option span {
-  display: block;
+  /* display: block; */
   flex-shrink: 0;
   margin: -4px 3px -4px 12px;
 }

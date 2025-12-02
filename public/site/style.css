@@ -12,7 +12,6 @@
     outline: none;
     border: none;
     text-decoration: none;
-    text-transform: capitalize;
     font-family: "Roboto", sans-serif;
 }
 
@@ -27,7 +26,6 @@ body {
 section {
     padding: 3rem 2rem;
     margin: 0 auto;
-    max-width: 1200px;
 }
 
 .header {
@@ -44,14 +42,25 @@ section {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
+    padding: 1.5rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.navbar {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 2rem;
 }
 
 .navbar a {
     margin: 0 1rem;
     font-size: 1.8rem;
     color: var(--branco-color);
+    text-transform: capitalize;
 }
 
 .btn-login {
@@ -91,6 +100,22 @@ section {
     display: flex;
     align-items: center;
     min-height: 100vh;
+    max-width: 1200px;
+}
+
+#home .content h3 {
+    color: #f1f1f1;
+    font-size: 6rem;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
+}
+
+#home .content p {
+    color: #f1f1f1;
+    font-size: 2rem;
+    font-weight: 100;
+    line-height: 1.8;
+    padding: 1rem 0;
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.8);
 }
 
 .content {
@@ -108,26 +133,64 @@ section {
     font-weight: 100;
     line-height: 1.8;
     padding: 1rem 0;
+}
 
+.about {
+    padding: 10rem 2rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.title-container {
+    width: 100%;
+    margin-bottom: 4rem;
+    text-align: center;
 }
 
 .title {
     font-size: 5rem;
     color: var(--branco-color);
     text-transform: uppercase;
+    display: inline-block;
 }
 
 .title span {
-    font-size: 5rem;
     color: var(--second-color);
-    text-align: center;
-    text-transform: uppercase;
-    
-} 
+}
+
 .about .row {
     display: flex;
     align-items: center;
-    background-color: var(--second-color);
-    gap: 1.5rem;
+    gap: 3rem;
+    flex-wrap: wrap;
+}
 
+.container-image {
+    flex: 1 1 45%;
+    min-width: 300px;
+}
+
+.container-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    display: block;
+}
+
+.row .content {
+    flex: 1 1 45%;
+    min-width: 300px;
+}
+
+.row .content h3 {
+    color: var(--branco-color);
+    font-size: 3rem;
+    margin-bottom: 2rem;
+}
+
+.row .content p {
+    color: var(--branco-color);
+    font-size: 1.6rem;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
 }

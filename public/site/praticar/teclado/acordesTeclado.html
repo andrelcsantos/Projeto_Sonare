@@ -1,21 +1,39 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teclado(Acordes)</title>
-    <link rel="stylesheet" href="../style.css">
+    <title>Violão(Acordes)</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="../../img/logo.png" type="image/x-icon">
 </head>
-
 <body>
 
+    
+    
+    <div class="exercicio-container">
+        <div class="exercicio-conteudo">
+            <header class="exercicio-header">
+                <h2 class="config-title">Violão</h2>
 
-    <button onclick="play()">Play</button> <br><br>
-    <button onclick="btn_Maior()">Maior</button>
-    <button onclick="btn_Menor()">Menor</button>
+            </header>
+            <div class="config-option">
+                <div class="exercicio-options">
+                    <button onclick="play()">Play</button> <br><br>
 
-    <button onclick="btn_next()">></button>
+                        <div id="grupo-ins">
+                            <button id="btnMaior" onclick="btn_Maior()">Maior</button>
+                            <button id="btnMenor" onclick="btn_Menor()">Menor</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="exercicio-footer">
+                    <div id="div_mensagem"></div>
+                    <button class="next-question-btn" onclick="btn_next()">Próximo</button>
+                </div>
+            </div>
+        </div>
 
     <audio id="C_Maior">
         <source src="../files/teclado/acordes/C_Maior.mp3" type="audio/mpeg">
@@ -38,8 +56,8 @@
     <audio id="B_Maior">
         <source src="../files/teclado/acordes/B_Maior.mp3" type="audio/mpeg">
     </audio>
-
-
+    
+    
     <audio id="C_Menor">
         <source src="../files/teclado/acordes/C_Menor.mp3" type="audio/mpeg">
     </audio>
@@ -62,10 +80,9 @@
         <source src="../files/teclado/acordes/B_Menor.mp3" type="audio/mpeg">
     </audio>
 
-    <div id="div_mensagem"></div>
+    
 
 </body>
-
 </html>
 <script>
     var fk_usuario = sessionStorage.ID_USUARIO;
@@ -77,64 +94,78 @@
     var tipo = Math.floor(Math.random() * 2);
     var acertos = 0;
     var erros = 0;
-    
+    div_mensagem.innerHTML = `${questaoAtual} de ${qtQuestoes} Questões`;
+
     var acordes = [
         [
-            document.getElementById("C_Maior"),
-            document.getElementById("D_Maior"),
-            document.getElementById("E_Maior"),
-            document.getElementById("F_Maior"),
-            document.getElementById("G_Maior"),
-            document.getElementById("A_Maior"),
-            document.getElementById("B_Maior")
+        document.getElementById("C_Maior"),
+        document.getElementById("D_Maior"),
+        document.getElementById("E_Maior"),
+        document.getElementById("F_Maior"),
+        document.getElementById("G_Maior"),
+        document.getElementById("A_Maior"),
+        document.getElementById("B_Maior")
         ],
 
-        [
-            document.getElementById("C_Menor"),
-            document.getElementById("D_Menor"),
-            document.getElementById("E_Menor"),
-            document.getElementById("F_Menor"),
-            document.getElementById("G_Menor"),
-            document.getElementById("A_Menor"),
-            document.getElementById("B_Menor")
-        ]
+        [        
+        document.getElementById("C_Menor"),
+        document.getElementById("D_Menor"),
+        document.getElementById("E_Menor"),
+        document.getElementById("F_Menor"),
+        document.getElementById("G_Menor"),
+        document.getElementById("A_Menor"),
+        document.getElementById("B_Menor")
+    ]
     ];
 
-    div_mensagem.innerHTML = `acertos: ${acertos}, erros: ${erros}, questão atual: ${questaoAtual}, quantidade: ${qtQuestoes}`
-    function play() {
 
+
+    function play() {
+  
         acordes[tipo][acorde].play();
-    }
+}
 
     function btn_Maior() {
 
         if (0 == tipo) {
             acertos++;
-        } else {
+            btnMaior.style.backgroundColor = "#4CAF50"
+            btnMenor.style.backgroundColor = "#FFF"
+         } else {
             erros++;
-        }
+            btnMaior.style.backgroundColor = "#FF746C";
+            btnMenor.style.backgroundColor = "#4CAF50"
+         }
     }
 
     function btn_Menor() {
 
-        if (1 == tipo) {
+         if (1 == tipo) {
             acertos++;
-        } else {
+            btnMenor.style.backgroundColor = "#4CAF50"
+            btnMaior.style.backgroundColor = "#FFF"
+         } else {
             erros++;
-        }
+            btnMenor.style.backgroundColor = "#FF746C";
+            btnMaior.style.backgroundColor = "#4CAF50"
+         }
     }
 
     function btn_next() {
-        div_mensagem.innerHTML = `acertos: ${acertos}, erros: ${erros}, questão atual: ${questaoAtual}, quantidade: ${qtQuestoes}`
-        if(questaoAtual < qtQuestoes){
-            acorde = Math.floor(Math.random() * 7);
-            tipo = Math.floor(Math.random() * 2);
-            questaoAtual++;
-        } else {
-        salvar();
-        }      
-    }
+        acorde = Math.floor(Math.random() * 7);
+        tipo = Math.floor(Math.random() * 2);
+        questaoAtual++;
+        div_mensagem.innerHTML = `${questaoAtual} de ${qtQuestoes} Questões`;
+        btnMaior.style.backgroundColor = "#FFF"
+        btnMenor.style.backgroundColor = "#FFF"
+        
 
+        if(questaoAtual > qtQuestoes) {
+            alert(`Você acerto: ${acertos} e errou ${erros} de ${qtQuestoes} questões`)
+            window.location.href = "../../dashboard/index.html";
+            salvar();
+        }
+    }
 
     function salvar() {
         console.log(fk_usuario, fk_instrumento, categoria, acertos, erros)
@@ -164,5 +195,4 @@
 
 
     }
-
 </script>
