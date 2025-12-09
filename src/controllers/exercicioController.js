@@ -77,8 +77,9 @@ if (fkUsuario == undefined ) {
 
 function acertosAc(req, res) {
     var fkInstrumento = req.params.fkInstrumento;
+    var fkUsuario = req.params.fkUsuario;
 
-    exercicioModel.acertosAc(fkInstrumento)
+    exercicioModel.acertosAc(fkInstrumento, fkUsuario)
         .then(
             function (resultado) {
                 if (resultado.length > 0) {
@@ -100,8 +101,9 @@ function acertosAc(req, res) {
 
 function acertosNt(req, res) {
     var fkInstrumento = req.params.fkInstrumento;
+    var fkUsuario = req.params.fkUsuario;
 
-    exercicioModel.acertosNt(fkInstrumento)
+    exercicioModel.acertosNt(fkInstrumento, fkUsuario)
         .then(
             function (resultado) {
                 if (resultado.length > 0) {
@@ -123,8 +125,9 @@ function acertosNt(req, res) {
 
 function errosAc(req, res) {
     var fkInstrumento = req.params.fkInstrumento;
+    var fkUsuario = req.params.fkUsuario;
 
-    exercicioModel.errosAc(fkInstrumento)
+    exercicioModel.errosAc(fkInstrumento, fkUsuario)
         .then(
             function (resultado) {
                 if (resultado.length > 0) {
@@ -147,8 +150,9 @@ function errosAc(req, res) {
 
 function errosNt(req, res) {
     var fkInstrumento = req.params.fkInstrumento;
+    var fkUsuario = req.params.fkUsuario;
 
-    exercicioModel.errosNt(fkInstrumento)
+    exercicioModel.errosNt(fkInstrumento, fkUsuario)
         .then(
             function (resultado) {
                 if (resultado.length > 0) {

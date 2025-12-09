@@ -17,44 +17,37 @@ FROM (
     FROM exercicio
     WHERE fk_usuario = ${fkUsuario}
     ORDER BY dia DESC
-) AS dias
-WHERE DATEDIFF(CURDATE(), dia) <= (
-    SELECT COUNT(*)
-    FROM (
-        SELECT DISTINCT dia
-        FROM exercicio
-        WHERE fk_usuario = ${fkUsuario}
-    ) AS total_dias
-)`;
+) AS dias`
+;
 
   console.log("Executando a instrução SQL: \n" + instrucaoSql);
   return database.executar(instrucaoSql);
 }
 
-function acertosAc(fkInstrumento) {
+function acertosAc(fkInstrumento, fkUsuario) {
   var instrucaoSql = `
-  SELECT SUM(respostas_certas) AS total_acertos_ac FROM exercicio WHERE fk_instrumento = ${fkInstrumento} AND tipo_exercicio = 'Acordes';`;
+  SELECT SUM(respostas_certas) AS total_acertos_ac FROM exercicio WHERE fk_instrumento = ${fkInstrumento} AND tipo_exercicio = 'Acordes' AND fk_usuario = ${fkUsuario};`;
   console.log("Executando a instrução SQL: \n" + instrucaoSql);
   return database.executar(instrucaoSql);
 }
 
-function acertosNt(fkInstrumento) {
+function acertosNt(fkInstrumento, fkUsuario) {
   var instrucaoSql = `
-  SELECT SUM(respostas_certas) AS total_acertos_nt FROM exercicio WHERE fk_instrumento = ${fkInstrumento} AND tipo_exercicio = 'Notas';`;
+  SELECT SUM(respostas_certas) AS total_acertos_nt FROM exercicio WHERE fk_instrumento = ${fkInstrumento} AND tipo_exercicio = 'Notas' AND fk_usuario = ${fkUsuario};`;
   console.log("Executando a instrução SQL: \n" + instrucaoSql);
   return database.executar(instrucaoSql);
 }
 
-function errosAc(fkInstrumento) {
+function errosAc(fkInstrumento, fkUsuario) {
   var instrucaoSql = `
-  SELECT SUM(respostas_erradas) AS total_erros_ac FROM exercicio WHERE fk_instrumento = ${fkInstrumento} AND tipo_exercicio = 'Acordes';`;
+  SELECT SUM(respostas_erradas) AS total_erros_ac FROM exercicio WHERE fk_instrumento = ${fkInstrumento} AND tipo_exercicio = 'Acordes' AND fk_usuario = ${fkUsuario};`;
   console.log("Executando a instrução SQL: \n" + instrucaoSql);
   return database.executar(instrucaoSql);
 }
 
-function errosNt(fkInstrumento) {
+function errosNt(fkInstrumento, fkUsuario) {
   var instrucaoSql = `
-  SELECT SUM(respostas_erradas) AS total_erros_nt FROM exercicio WHERE fk_instrumento = ${fkInstrumento} AND tipo_exercicio = 'Notas';`;
+  SELECT SUM(respostas_erradas) AS total_erros_nt FROM exercicio WHERE fk_instrumento = ${fkInstrumento} AND tipo_exercicio = 'Notas' AND fk_usuario = ${fkUsuario};`;
   console.log("Executando a instrução SQL: \n" + instrucaoSql);
   return database.executar(instrucaoSql);
 }

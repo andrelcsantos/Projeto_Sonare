@@ -15,19 +15,19 @@ router.post("/salvar", function (req, res) {
   exercicioController.salvar(req, res);
 })
 
-router.get("/acertosAc/:fkInstrumento", function (req, res) {
+router.get("/acertosAc/:fkInstrumento/:fkUsuario", function (req, res) {
   exercicioController.acertosAc(req, res);
 });
 
-router.get("/acertosNt/:fkInstrumento", function (req, res) {
+router.get("/acertosNt/:fkInstrumento/:fkUsuario", function (req, res) {
   exercicioController.acertosNt(req, res);
 });
 
-router.get("/errosAc/:fkInstrumento", function (req, res) {
+router.get("/errosAc/:fkInstrumento/:fkUsuario", function (req, res) {
   exercicioController.errosAc(req, res);
 });
 
-router.get("/errosNt/:fkInstrumento", function (req, res) {
+router.get("/errosNt/:fkInstrumento/:fkUsuario", function (req, res) {
   exercicioController.errosNt(req, res);
 });
 

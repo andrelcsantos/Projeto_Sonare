@@ -6,9 +6,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="../site/img/logo.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../img/logo.png" type="image/x-icon">
     <title>Sonare | Dashboard</title>
     <link rel="stylesheet" href="dashboard.css">
+    <!-- <script src="../js/sessao.js"></script> -->
 </head>
 <body>
     <div class="janela">
@@ -60,7 +61,7 @@
     </div> -->
 
     <div class="config-container">
-        <h1 class="config-title">Dias Consecultivos:</h1>
+        <h1 class="config-title">Dias Praticados:</h1>
         <div id="diasConsecutivos_kpi"><b></b></div>
     </div>
 
@@ -96,7 +97,7 @@
             <b>Erros:</b>
             <div id="erros_teclado_nt"><b></b></div> <br>
         </div>
-    
+    <a href="../login/index.html"></a>
 </body>
 </html>
 
@@ -152,7 +153,7 @@
 
 function dadosBass() { 
     var fkInstrumento = 1;
-    fetch(`/exercicios/acertos/${fkInstrumento}`)
+    fetch(`/exercicios/acertos/${fkInstrumento}/${fkUsuario}`)
     .then(res => res.json())
     .then(dados => {
         const div = document.getElementById("acertos_bass");
@@ -180,7 +181,7 @@ function dadosBass() {
 function dadosViolao() {
     var fkInstrumento = 2;
 
-    fetch(`/exercicios/acertosAc/${fkInstrumento}`)
+    fetch(`/exercicios/acertosAc/${fkInstrumento}/${fkUsuario}`)
     .then(res => res.json())
     .then(dados => {
         const div = document.getElementById("acertos_violao_ac");
@@ -191,7 +192,7 @@ function dadosViolao() {
         }
     });
 
-    fetch(`/exercicios/acertosNt/${fkInstrumento}`)
+    fetch(`/exercicios/acertosNt/${fkInstrumento}/${fkUsuario}`)
     .then(res => res.json())
     .then(dados => {
         const div = document.getElementById("acertos_violao_nt");
@@ -202,7 +203,7 @@ function dadosViolao() {
         }
     });
 
-    fetch(`/exercicios/errosAc/${fkInstrumento}`)
+    fetch(`/exercicios/errosAc/${fkInstrumento}/${fkUsuario}`)
     .then(res => res.json())
     .then(dados => {
         const div = document.getElementById("erros_violao_ac");
@@ -213,7 +214,7 @@ function dadosViolao() {
         }
     });
 
-    fetch(`/exercicios/errosNt/${fkInstrumento}`)
+    fetch(`/exercicios/errosNt/${fkInstrumento}/${fkUsuario}`)
     .then(res => res.json())
     .then(dados => {
         const div = document.getElementById("erros_violao_nt");
@@ -229,7 +230,7 @@ function dadosViolao() {
 function dadosTeclado() {
     var fkInstrumento = 3;
 
-    fetch(`/exercicios/acertosAc/${fkInstrumento}`)
+    fetch(`/exercicios/acertosAc/${fkInstrumento}/${fkUsuario}`)
     .then(res => res.json())
     .then(dados => {
         const div = document.getElementById("acertos_teclado_ac");
@@ -240,7 +241,7 @@ function dadosTeclado() {
         }
     });
 
-    fetch(`/exercicios/errosAc/${fkInstrumento}`)
+    fetch(`/exercicios/errosAc/${fkInstrumento}/${fkUsuario}`)
     .then(res => res.json())
     .then(dados => {
         const div = document.getElementById("erros_teclado_ac");
@@ -251,7 +252,7 @@ function dadosTeclado() {
         }
     });
 
-    fetch(`/exercicios/acertosNt/${fkInstrumento}`)
+    fetch(`/exercicios/acertosNt/${fkInstrumento}/${fkUsuario}`)
     .then(res => res.json())
     .then(dados => {
         const div = document.getElementById("acertos_teclado_nt");
@@ -262,7 +263,7 @@ function dadosTeclado() {
         }
     });
 
-    fetch(`/exercicios/errosNt/${fkInstrumento}`)
+    fetch(`/exercicios/errosNt/${fkInstrumento}/${fkUsuario}`)
     .then(res => res.json())
     .then(dados => {
         const div = document.getElementById("erros_teclado_nt");
@@ -290,5 +291,10 @@ function dadosTeclado() {
         console.error("Erro ao exibir dias", err);
     });
     
+
+    function limparSessao() {
+        sessionStorage.clear();
+        window.location = "../login/index.html";
+}
 
 </script>

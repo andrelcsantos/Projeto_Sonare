@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <link rel="shortcut icon" href="../site/img/logo.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../img/logo.png" type="image/x-icon">
+
     <title>Sonare Login</title>
 
-    <script src="../../js/sessao.js"></script>
+    <script src="../js/sessao.js"></script>
 </head>
 <body>
     <main class="container">
@@ -84,7 +85,7 @@
             } else {
 
                 console.log("Houve um erro ao tentar realizar o login!");
-
+                alert("Usuário não encontrado, verifique se a senha e o e-mail estão corretos")
                 resposta.text().then(texto => {
                     console.error(texto);
                     finalizarAguardar(texto);
@@ -94,6 +95,7 @@
         }).catch(function (erro) {
             console.log(erro);
         })
+        return false;
     }
     }
 
